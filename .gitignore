@@ -45,7 +45,6 @@ Temporary Items
 [Ll]ocal
 [Ss]cripts
 pyvenv.cfg
-venv
 .venv
 pip-selfcheck.json
 
@@ -95,15 +94,7 @@ $RECYCLE.BIN/
 *.lnk
 
 *.json
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# pyenv
-.python-version
+# End of https://www.toptal.com/developers/gitignore/api/venv,windows,macos,visualstudiocode
 
 # Environments
 .env
@@ -114,11 +105,35 @@ ENV/
 env.bak/
 venv.bak/
 
+
 # Spyder project settings
 .spyderproject
 .spyproject
-# Jupyter Notebook
-.ipynb_checkpoints
+
 # Rope project settings
 .ropeproject
-# End of https://www.toptal.com/developers/gitignore/api/venv,windows,macos,visualstudiocode
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+.pt
+runs/
+0001_initial.py
+0002_initial.py
+
+.vscode/
+media/
+*.json
+
+*.t7
+
+
+migrations/

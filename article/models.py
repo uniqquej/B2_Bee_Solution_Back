@@ -9,14 +9,14 @@ class Solution(models.Model):
     output_image = models.ImageField(null=True)
     
 class Article(models.Model):
-    article_user = models.ForeignKey(User,on_delete=models.CASCADE)
-    article_category = models.ForeignKey(Category,on_delete=models.CASCADE)
-    article_solution = models.ForeignKey(Solution,on_delete=models.CASCADE)    
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    solution = models.ForeignKey(Solution,on_delete=models.CASCADE)    
     content = models.TextField()
     mbti = models.CharField(max_length=50)
     
 class Comment(models.Model):
-    comment_user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     article = models.ForeignKey(Article,on_delete=models.CASCADE)
     content = models.TextField()
     create_at = models.DateTimeField(auto_created=True)
