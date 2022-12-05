@@ -10,9 +10,6 @@ from users.models import User_chr
 from article.models import Rating
 from sklearn.metrics.pairwise import cosine_similarity
 
-users = pd.read_csv('users.csv')
-ratings = pd.read_csv('ratings.csv')
-
 
 def make_solution(my_id):
 
