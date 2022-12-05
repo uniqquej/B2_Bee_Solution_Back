@@ -1,5 +1,20 @@
 from rest_framework import serializers
-from article.models import Article
+from article.models import Article, Solution, Rating
+
+class WorrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields=['category','content','mbti']
+
+class BeeSolutionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Solution
+        fields = ['wise',]
+        
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields=['rating',]
 
 class ArticleSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()

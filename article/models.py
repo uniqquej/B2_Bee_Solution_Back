@@ -1,12 +1,12 @@
 from django.db import models
 from users.models import User
-    
+
 class Solution(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    solution_image = models.ImageField()
-    category = models.CharField(max_length=10)
+    solution_image = models.ImageField(blank=True, null=True)
+    # category = models.CharField(max_length=10)
     wise = models.TextField()
-    
+
 class Rating(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     solution = models.ForeignKey(Solution, on_delete=models.CASCADE)

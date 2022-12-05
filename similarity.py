@@ -23,7 +23,7 @@ def make_solution(my_id):
     pd.set_option('display.max_columns', 10)
     pd.set_option('display.width', 300)
 
-    solution_user = solution_rating.pivot_table('rating', index='user_id', columns='solution')
+    solution_user = solution_rating.pivot_table('rating', index='user_id', columns='solution_id')
 
     # 평점을 부여안한 솔루션은 그냥 0 이라고 부여
     solution_user = solution_user.fillna(0)
