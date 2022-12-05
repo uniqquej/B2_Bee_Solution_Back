@@ -2,8 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from similarity import make_solution
+from makesolution import make_wise_image
 from article.models import Solution
-from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer
+from article.serializers import WorrySerializer, BeeSolutionSerializer, RatingSerializer, MakeSolutionSerializer
+
 
 class MakeWorryView(APIView):
     def post(self, request):
@@ -34,4 +36,18 @@ class BeeSolutionView(APIView):
         return Response(rating_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-        
+class MakeSolutionView(APIView):
+    def get(self, request, article_id):
+        pass
+    
+    def post(self, request, article_id):
+        make_solution_serializer = MakeSolutionSerializer(data=request.data)
+        if make_solution_serializer.is_valid():
+            make_solution_serializer.save(user=request.user)
+            
+            latest_idx = Solution.objects.order_by('-pk')[0].pk
+            makewisepicture(latest_idx)
+            
+            return Response("저장 완료", status=status.HTTP_200_OK)
+        else:
+            return Response("실패", status=status.HTTP_400_BAD_REQUEST)
