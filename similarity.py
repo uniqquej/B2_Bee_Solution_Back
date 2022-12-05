@@ -1,17 +1,19 @@
 import os
 import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'beesolution.settings')
+django.setup()
+
 import random
 import pandas as pd
 from users.models import User_chr
-from article.models import Solution
+from article.models import Rating
 from sklearn.metrics.pairwise import cosine_similarity
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wetyle_share.settings')
-django.setup()
 
 def make_solution(my_id):
 
-    ratings = Solution.objects.all().values()
+    ratings = Rating().objects.all().values()
     ratings_pandas = pd.DataFrame(ratings)
     mbti = User_chr.objects.all().values()
     mbti_pandas = pd.DataFrame(mbti)
