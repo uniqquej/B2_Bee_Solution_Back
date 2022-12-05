@@ -51,3 +51,10 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self): # 관리자 화면에 접근하도록
         return self.is_admin
+
+
+class UserChr(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    mbti = models.CharField(max_length=4)
+    age = models.IntegerField()
+    gender = models.CharField(max_length=1)
