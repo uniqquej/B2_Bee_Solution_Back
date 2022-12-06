@@ -60,9 +60,8 @@ class MakeSolutionView(APIView):
     def post(self, request, article_id):
         make_solution_serializer = MakeSolutionSerializer(data=request.data)
         if make_solution_serializer.is_valid():
-            # 원본사진 저장
             make_solution_serializer.save(user=request.user)
-            # solition 적용 이미지 저장
+            
             latest_idx = Solution.objects.order_by('-pk')[0].pk
             make_wise_image(latest_idx)
             
@@ -75,4 +74,29 @@ class MainView(APIView):
         main_articles = Article.objects.all()
         main_serializer = WorrySerializer(main_articles,many=True)
         return Response(main_serializer.data,status=status.HTTP_200_OK)
-
+    
+class MainDetailView(APIView):
+    def get(self,request,article_id):
+        main_detail = Article.objects.get(id=article_id)
+        main_detail_serializer = WorrySerializer(main_detail)
+        return Response(main_detail_serializer.data,status=status.HTTP_200_OK)
+    
+    def put(self,request,article_id):
+        main_aritcle = Article.objects.get(id= article_id)
+        main_serializer = WorrySerializer(main_aritcle,data=request.data)
+        if request.user == main_aritcle.user:
+            if main_serializer.is_valid():
+                main_serializer.save()
+                return Response(main_serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response(main_serializer.errors,status=status.__name__)
+        else:
+            return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
+    
+    def delete(self,request,article_id):
+        main_delete = Article.objects.get(id=article_id)
+        if request.user == main_delete.user:
+            main_delete.delete()
+            return Response({"message":"삭제 완료"},status=status.HTTP_200_OK)
+        else:
+            return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
