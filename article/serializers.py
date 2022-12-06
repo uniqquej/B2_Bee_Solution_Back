@@ -24,9 +24,6 @@ class WorrySerializer(serializers.ModelSerializer):
         model = Article
         fields=['category','content','mbti','solution','id']
         read_only_fields=['id',]
-        extra_kwargs = {
-            'content':{'write_only':True}
-        }
          
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
