@@ -122,11 +122,48 @@ class ArticleListView(APIView): # main view와 합쳐지는 지 생각해봐야�
             category = '투자'
         elif category_id == 6:
             category = '연애'
-        elif category == 7:
+        elif category_id == 7:
             category = '스포츠'
         elif category_id == 8:
             category = '연예'
 
-        articles = Article.objects.filter(category = category)
+        if category_id == 9:
+            mbti = 'ENFP'
+        elif category_id == 10:
+            mbti = 'ENFJ'
+        elif category_id == 11:
+            mbti = 'ENTP'
+        elif category_id == 12:
+            mbti = 'ENTJ'
+        elif category_id == 13:
+            mbti = 'ESFP'
+        elif category_id == 14:
+            mbti = 'ESFJ'
+        elif category_id == 15:
+            mbti = 'ESTP'
+        elif category_id == 16:
+            mbti = 'ESTJ'
+        elif category_id == 17:
+            mbti = 'INFP'
+        elif category_id == 18:
+            mbti = 'INFJ'
+        elif category_id == 19:
+            mbti = 'INTP'
+        elif category_id == 20:
+            mbti = 'INTJ'
+        elif category_id == 21:
+            mbti = 'ISFP'
+        elif category_id == 22:
+            mbti = 'ISFJ'
+        elif category_id == 23:
+            mbti = 'ISTP'
+        elif category_id == 24:
+            mbti = 'ISTJ'
+
+        if category_id >=9:
+            articles = Article.objects.filter(mbti=mbti)
+        else:
+            articles = Article.objects.filter(category = category)
+
         article_serializer = WorrySerializer(articles, many = True)
         return Response(article_serializer.data, status=status.HTTP_200_OK)
