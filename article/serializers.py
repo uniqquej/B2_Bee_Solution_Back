@@ -26,5 +26,8 @@ class RatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields=['rating',]
 
-        
+class MakeSolutionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Solution
+        fields = ['solution_image',]
 
