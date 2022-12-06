@@ -60,8 +60,9 @@ class MakeSolutionView(APIView):
     def post(self, request, article_id):
         make_solution_serializer = MakeSolutionSerializer(data=request.data)
         if make_solution_serializer.is_valid():
+            # 원본사진 저장
             make_solution_serializer.save(user=request.user)
-            
+            # solition 적용 이미지 저장
             latest_idx = Solution.objects.order_by('-pk')[0].pk
             make_wise_image(latest_idx)
             

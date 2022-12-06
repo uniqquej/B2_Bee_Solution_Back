@@ -1,5 +1,5 @@
 from users.models import User
-from users.serializers import UserSerializer, UserCreateSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer
+from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -25,7 +25,7 @@ class UserCreateView(APIView):
         if exist_user:
             return Response({"message":f"다른 아이디를 사용해주세요."}, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer = UserCreateSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data)
         
         if serializer.is_valid():
             serializer.save()

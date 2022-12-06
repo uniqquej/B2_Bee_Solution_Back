@@ -139,3 +139,7 @@ migrations/
 db.sqlite3
 __pycache__/
 management/
+__pycache__
+db.sqlite3/
+
+fonts/
