@@ -33,5 +33,5 @@ class RatingSerializer(serializers.ModelSerializer):
 class MakeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
-        fields = ['user','solution_image']
+        fields = ['user','solution_image', 'wise']
         read_only_fields=['user',]
