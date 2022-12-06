@@ -19,28 +19,30 @@ def make_wise_image(idx):
     
     # 명언 정보 가져오기
     input_wise = target.wise
+    input_nickname = target.nickname
+    input_nickname = " - " + input_nickname
     wise_len = len(input_wise)
     
     # 폰트 40일때 12글자까지 / 30일때 15글자까지 / 폰트크기에 따라 줄간격 조정
     if wise_len > 40:
         fontsize = 30
-        y_upper = 33
+        y_upper = 35
     else:
         fontsize = 40
-        y_upper = 40
+        y_upper = 45
     
     # 개행 수에 따라 y축 정렬
-    text = input_wise.split(',')
+    text = input_wise.split('/')
     if len(text) >= 5:
-        x, y = 70, 90
+        x, y = 70, 70
     elif len(text) == 4:
-        x, y = 70, 110
+        x, y = 70, 90
     elif len(text) == 3:
-        x, y = 70, 130
+        x, y = 70, 110
     elif len(text) == 2:
-        x, y = 70, 150
+        x, y = 70, 130
     else:
-        x, y = 70, 200
+        x, y = 70, 180
     
     # 긴 문장 처리용
     for i in text:
@@ -52,6 +54,7 @@ def make_wise_image(idx):
             continue
     
     font = ImageFont.truetype("fonts/NotoSerifKR-Bold.otf", fontsize)
+    
     # 텍스트 삽입
     for i in text:
         
@@ -75,13 +78,27 @@ def make_wise_image(idx):
         elif len(i) <= 12:
             x = 90
         else:
-            x = 70
+            x = 50
+            
+        if fontsize < 40:
+            x += 40
             
         position = (x, y)
-        bbox = draw.textbbox(position, i, font=font)
-        draw.rectangle(bbox, fill=(0,0,0,150))
+        left, top, right, bottom = draw.textbbox(position, i, font=font)
+        draw.rectangle((left-2, top-2, right+2, bottom+2), fill=(0,0,0,150))
         draw.text(position, i, font=font, fill=(255,255,255))
         
         y+=y_upper
         
+    # nickname 삽입
+    x = 360 - (len(input_nickname) * 5)
+    y += 30
+    position = (x, y)
+    
+    fontsize = 17
+    font_nickname = ImageFont.truetype("fonts/NotoSerifKR-Bold.otf", fontsize)
+    left, top, right, bottom = draw.textbbox(position, input_nickname, font=font_nickname)
+    draw.rectangle((left-5, top-5, right+5, bottom+5), fill=(0,0,0,150))
+    draw.text(position, input_nickname, font=font_nickname, fill=(255,255,255))
+    
     img.save(f'./media/{image_url}', 'jpeg')
