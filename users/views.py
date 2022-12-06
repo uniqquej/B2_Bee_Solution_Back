@@ -75,7 +75,7 @@ class UserAuthView(APIView):
             token = CustomTokenObtainPairSerializer.get_token(user)
             refresh_token = str(token)
             access_token = str(token.access_token)
-            print(access_token)
+
             serializer = UserSerializer(user)
             response = Response(
                 {
