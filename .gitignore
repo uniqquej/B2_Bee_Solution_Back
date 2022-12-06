@@ -135,5 +135,7 @@ media/
 
 *.t7
 
-
+__pycache__/
 migrations/
+db.sqlite3
+management/
