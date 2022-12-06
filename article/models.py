@@ -23,6 +23,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     article = models.ForeignKey(Article,on_delete=models.CASCADE)
     content = models.TextField()
-    create_at = models.DateTimeField(auto_created=True)
+    create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     
