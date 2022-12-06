@@ -9,10 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
-class UserCreateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        exclude = ('followings',)
 
     def create(self, validated_data):   
         user = super().create(validated_data)

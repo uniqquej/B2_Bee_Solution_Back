@@ -17,10 +17,20 @@ def make_wise_image(idx):
     draw = ImageDraw.Draw(img)
     
     font = ImageFont.truetype("fonts/NotoSerifKR-Bold.otf", 30) # 폰트변경
+
+    position = (50, 180)
+    position2 = (50, 220)
     text = "첫번째줄입니다"
     text2 = "두번째줄입니다"
-    draw.text((50, 180), text, font=font, fill=(0,0,0))
-    draw.text((50, 220), text2, font=font, fill=(0,0,0))
+
+    bbox = draw.textbbox(position, text, font=font)
+    draw.rectangle(bbox, fill="white")
+
+    bbox = draw.textbbox(position2, text2, font=font)
+    draw.rectangle(bbox, fill="black")
+    
+    draw.text(position, text, font=font, fill=(0,0,0))
+    draw.text(position2, text2, font=font, fill=(255,255,255))
 
     img.show()
     img.save(f'./media/{image_url}', 'jpeg')
