@@ -125,7 +125,7 @@ class ArticleDetailView(APIView):
         else:
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
         
-class MainView(APIView): # main view와 합쳐지는 지 생각해봐야함
+class MainView(APIView):
     def get(self, request, category_id):
 
         if 0 < category_id < 9 :

@@ -16,9 +16,10 @@ class BeeSolutionSerializer(serializers.ModelSerializer):
        
 class WorrySerializer(serializers.ModelSerializer):
     solution=BeeSolutionSerializer(read_only = True)
+    comment_set = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Article
-        fields=['category','content','mbti','solution','id']
+        fields=['category','content','mbti','solution','id', 'comment_set']
         read_only_fields=['id',]
          
 class RatingSerializer(serializers.ModelSerializer):
