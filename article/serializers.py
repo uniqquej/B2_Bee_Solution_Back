@@ -13,7 +13,7 @@ class BeeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
         fields = ['wise','id'] # wise > solution_image로 변경할 것 
-        read_only_fields=['id',] 
+        read_only_fields=['id',]
        
 class WorrySerializer(serializers.ModelSerializer):
     solution=BeeSolutionSerializer(read_only = True)
@@ -29,5 +29,5 @@ class RatingSerializer(serializers.ModelSerializer):
 class MakeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
-        fields = ['solution_image',]
-
+        fields = ['user','solution_image']
+        read_only_fields=['user',]

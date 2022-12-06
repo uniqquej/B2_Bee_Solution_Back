@@ -4,14 +4,13 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'beesolution.settings')
 django.setup()
 
-import cv2
 import numpy as np
 from PIL import Image
 from PIL import ImageDraw, ImageFont
 from article.models import Solution
 
 def make_wise_image(idx):
-    target = Solution2.objects.get(id=idx)
+    target = Solution.objects.get(id=idx)
     image_url = target.solution_image
     img = Image.open(f'media/{image_url}').convert('RGB')
     img = img.resize((550,400))
