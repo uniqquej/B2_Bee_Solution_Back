@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from similarity import make_solution
 from makesolution import make_wise_image
-from article.models import Solution, Article
-from article.serializers import WorrySerializer, BeeSolutionSerializer, RatingSerializer, MakeSolutionSerializer
+from article.models import Solution, Comment, Article
+from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer
+
 
 
 class MakeWorryView(APIView):
@@ -37,6 +38,21 @@ class BeeSolutionView(APIView):
             return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
         return Response(rating_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class CommentView(APIView):
+    def get(self,request,article_id):
+        article=  Article.objects.get(id=article_id)
+        comments = article.comment_set.all()
+        comment_serializer = CommentSerializer(comments,many=True)
+        return Response(comment_serializer.data,status=status.HTTP_200_OK)
+    
+    def post(self,request,article_id):
+        comment_serializer = CommentSerializer(data=request.data)
+        if comment_serializer.is_valid():
+            comment_serializer.save(comment_user = request.user, article_id = article_id)
+            return Response(comment_serializer.data,status=status.HTTP_201_CREATED)
+        else:
+            return Response(comment_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
 class MakeSolutionView(APIView):
     def get(self, request, article_id):
@@ -53,3 +69,10 @@ class MakeSolutionView(APIView):
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
+
+class MainView(APIView):
+    def get(self,request):
+        main_articles = Article.objects.all()
+        main_serializer = WorrySerializer(main_articles,many=True)
+        return Response(main_serializer.data,status=status.HTTP_200_OK)
+

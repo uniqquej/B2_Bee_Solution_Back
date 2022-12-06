@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "users",
     "article",
     "corsheaders",
+    "django_seed",
 ]
 
 REST_FRAMEWORK = {
