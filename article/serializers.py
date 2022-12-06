@@ -5,11 +5,7 @@ from article.models import Article, Solution, Rating
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['user','article','content']
-        read_only_fields = ['article',]
-        extra_kwargs = {
-            'content':{'write_only':True}
-        }
+        fields = ['user','article','content']       
         
         
 class BeeSolutionSerializer(serializers.ModelSerializer):
