@@ -15,25 +15,17 @@ def make_solution(my_id):
 
     ratings = Rating.objects.all().values()
     ratings_pandas = pd.DataFrame(ratings)
-<<<<<<< HEAD
-    mbti = UserChr.objects.all().values()
-    mbti_pandas = pd.DataFrame(mbti)
-=======
     chars = UserChr.objects.all().values()
     chars_pandas = pd.DataFrame(chars)
->>>>>>> 9a2f913c2e21ac3dc653857aa2a7e9a0c6408933
+
     
-    mbti_rating = pd.merge(ratings_pandas, mbti_pandas, on='user_id') #user_id로 병합 
+    solution_rating = pd.merge(ratings_pandas, chars_pandas, on='user_id') #user_id로 병합 
 
     # 데이터프레임을 출력했을때 더 많은 열이 보이도록 함
     pd.set_option('display.max_columns', 10)
     pd.set_option('display.width', 300)
 
-<<<<<<< HEAD
-    solution_user = mbti_rating.pivot_table('rating', index='user_id', columns='solution')
-=======
     solution_user = solution_rating.pivot_table('rating', index='user_id', columns='solution_id')
->>>>>>> 9a2f913c2e21ac3dc653857aa2a7e9a0c6408933
 
     # 평점을 부여안한 솔루션은 그냥 0 이라고 부여
     solution_user = solution_user.fillna(0)

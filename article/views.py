@@ -64,7 +64,7 @@ class MakeSolutionView(APIView):
             make_solution_serializer.save(user=request.user)
             
             latest_idx = Solution.objects.order_by('-pk')[0].pk
-            makewisepicture(latest_idx)
+            make_wise_image(latest_idx)
             
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
@@ -75,4 +75,15 @@ class MainView(APIView):
         main_articles = Article.objects.all()
         main_serializer = WorrySerializer(main_articles,many=True)
         return Response(main_serializer.data,status=status.HTTP_200_OK)
-
+    
+class MainDetailView(APIView):
+    def get(self,request,article_id):
+        main_detail = Article.objects.get(id=article_id)
+        main_detail_serializer = WorrySerializer(main_detail)
+        return Response     
+    
+    def put(self,request,article_id):
+        return Response
+    
+    def delete(self,request,article_id):
+        return Response
