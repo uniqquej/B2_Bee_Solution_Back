@@ -6,8 +6,11 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['user','article','content']
-        read_only_fields = ('article',)
-        write_only_fields = ('content',)
+        read_only_fields = ['article',]
+        extra_kwargs = {
+            'content':{'write_only':True}
+        }
+        
         
 class BeeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,7 +22,11 @@ class WorrySerializer(serializers.ModelSerializer):
     solution=BeeSolutionSerializer(read_only = True)
     class Meta:
         model = Article
-        fields=['category','content','mbti','solution']
+        fields=['category','content','mbti','solution','id']
+        read_only_fields=['id',]
+        extra_kwargs = {
+            'content':{'write_only':True}
+        }
          
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:

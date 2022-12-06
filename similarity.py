@@ -14,6 +14,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 def make_solution(my_id):
     ratings = Rating.objects.all().values()
     ratings_pandas = pd.DataFrame(ratings)
+    chars = UserChr.objects.all().values()
+    chars_pandas = pd.DataFrame(chars)
 
     chars = UserChr.objects.all().values()
     chars_pandas = pd.DataFrame(chars)
@@ -25,7 +27,6 @@ def make_solution(my_id):
     pd.set_option('display.width', 300)
 
     solution_user = solution_rating.pivot_table('rating', index='user_id', columns='solution_id')
-
 
     # 평점을 부여안한 솔루션은 그냥 0 이라고 부여
     solution_user = solution_user.fillna(0)
