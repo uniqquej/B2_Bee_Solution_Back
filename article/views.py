@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from similarity import make_solution
 from makesolution import make_wise_image
-from article.models import Solution, Comment, Article
+from article.models import Solution, Article, Rating
 from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer
 
 
@@ -33,8 +33,14 @@ class BeeSolutionView(APIView):
     def post(self,request,solution_id):
         rating_serializer = RatingSerializer(data = request.data)
         if rating_serializer.is_valid():
-            rating_serializer.save(user = request.user, solution_id = solution_id)
-            return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
+            #같은 유저가 같은 솔루션을 평가했는지 체크
+            if Rating.objects.filter(user_id = request.user.id, solution_id = solution_id).exists():
+                Rating.objects.filter(user_id = request.user.id, solution_id = solution_id).delete()
+                rating_serializer.save(user = request.user, solution_id = solution_id)
+                return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
+            else:
+                rating_serializer.save(user = request.user, solution_id = solution_id)
+                return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
         return Response(rating_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommentView(APIView):
@@ -100,3 +106,64 @@ class MainDetailView(APIView):
             return Response({"message":"삭제 완료"},status=status.HTTP_200_OK)
         else:
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
+        
+class ArticleListView(APIView): # main view와 합쳐지는 지 생각해봐야함
+    def get(self, request, category_id):
+
+        if category_id == 1:
+            category = '음식'
+        elif category_id == 2:
+            category = '취미'
+        elif category_id == 3:
+            category = '취업'
+        elif category_id == 4:
+            category = '일상'
+        elif category_id == 5:
+            category = '투자'
+        elif category_id == 6:
+            category = '연애'
+        elif category_id == 7:
+            category = '스포츠'
+        elif category_id == 8:
+            category = '연예'
+
+        if category_id == 9:
+            mbti = 'ENFP'
+        elif category_id == 10:
+            mbti = 'ENFJ'
+        elif category_id == 11:
+            mbti = 'ENTP'
+        elif category_id == 12:
+            mbti = 'ENTJ'
+        elif category_id == 13:
+            mbti = 'ESFP'
+        elif category_id == 14:
+            mbti = 'ESFJ'
+        elif category_id == 15:
+            mbti = 'ESTP'
+        elif category_id == 16:
+            mbti = 'ESTJ'
+        elif category_id == 17:
+            mbti = 'INFP'
+        elif category_id == 18:
+            mbti = 'INFJ'
+        elif category_id == 19:
+            mbti = 'INTP'
+        elif category_id == 20:
+            mbti = 'INTJ'
+        elif category_id == 21:
+            mbti = 'ISFP'
+        elif category_id == 22:
+            mbti = 'ISFJ'
+        elif category_id == 23:
+            mbti = 'ISTP'
+        elif category_id == 24:
+            mbti = 'ISTJ'
+
+        if category_id >=9:
+            articles = Article.objects.filter(mbti=mbti)
+        else:
+            articles = Article.objects.filter(category = category)
+
+        article_serializer = WorrySerializer(articles, many = True)
+        return Response(article_serializer.data, status=status.HTTP_200_OK)

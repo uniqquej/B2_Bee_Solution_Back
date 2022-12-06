@@ -22,7 +22,8 @@ class WorrySerializer(serializers.ModelSerializer):
     solution=BeeSolutionSerializer(read_only = True)
     class Meta:
         model = Article
-        fields=['category','content','mbti','solution']
+        fields=['category','content','mbti','solution','id']
+        read_only_fields=['id',]
         extra_kwargs = {
             'content':{'write_only':True}
         }
