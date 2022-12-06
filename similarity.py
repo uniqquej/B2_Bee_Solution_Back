@@ -12,13 +12,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def make_solution(my_id):
-
     ratings = Rating.objects.all().values()
     ratings_pandas = pd.DataFrame(ratings)
     chars = UserChr.objects.all().values()
     chars_pandas = pd.DataFrame(chars)
 
-    
+    chars = UserChr.objects.all().values()
+    chars_pandas = pd.DataFrame(chars)
+
     solution_rating = pd.merge(ratings_pandas, chars_pandas, on='user_id') #user_id로 병합 
 
     # 데이터프레임을 출력했을때 더 많은 열이 보이도록 함

@@ -4,7 +4,6 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'beesolution.settings')
 django.setup()
 
-import cv2
 import numpy as np
 from PIL import Image
 from PIL import ImageDraw, ImageFont

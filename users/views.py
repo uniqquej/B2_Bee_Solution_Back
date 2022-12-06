@@ -1,5 +1,5 @@
 from users.models import User
-from users.serializers import UserSerializer, UserCreateSerializer, CustomTokenObtainPairSerializer
+from users.serializers import UserSerializer, UserCreateSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -99,3 +99,20 @@ class SignoutView(APIView) :
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+
+
+class ProfileView(APIView):
+    def get(self, request, user_id):
+        profile = get_object_or_404(User, id=user_id)
+        serializer = UserprofileSerializer(profile)
+        return Response(serializer.data)
+
+    def put(self, request, user_id):
+        profile = User.objects.get(id=user_id)
+        update_serializer = UserprofileSerializer(profile, data=request.data)
+        if update_serializer.is_valid():
+            update_serializer.save()
+            return Response(update_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message":f"${update_serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)

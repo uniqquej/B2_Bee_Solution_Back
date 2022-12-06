@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from users.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from article.serializers import WorrySerializer, MakeSolutionSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,3 +28,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['username'] = user.username
 
         return token
+
+
+
+class UserprofileSerializer(serializers.ModelSerializer):
+    article_set = WorrySerializer(many=True)
+    solution_set = MakeSolutionSerializer(read_only = True)
+
+    class Meta:
+        model = User
+        fields = ["username", 'profile_img', 'article_set', 'solution_set']

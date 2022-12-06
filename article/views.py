@@ -7,7 +7,6 @@ from article.models import Solution, Comment, Article
 from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer
 
 
-
 class MakeWorryView(APIView):
     def post(self, request):
         
