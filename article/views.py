@@ -5,21 +5,24 @@ from similarity import make_solution
 from article.models import Solution, Comment, Article
 from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer
 
+
 class MakeWorryView(APIView):
     def post(self, request):
         
         my_id = request.user.id
         result = make_solution(my_id)
-        print(result)
-        
+
         worry_serializer = WorrySerializer(data = request.data)
         if worry_serializer.is_valid():
             worry_serializer.save(user=request.user, solution_id= result)
-            return Response(worry_serializer.errors)
-        
-        return Response({"message":"성공", "solution_id":result})
+            return Response(worry_serializer.data, status=status.HTTP_200_OK)
+        return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-   
+    def get(self, request):
+        solution = Article.objects.filter(user_id = request.user.id).last()
+        solution_serializer = WorrySerializer(solution)
+        return Response(solution_serializer.data, status=status.HTTP_200_OK)
+      
 class BeeSolutionView(APIView):  
     def get(self,request, solution_id):
         bee_solution = Solution.objects.get(id = solution_id)
@@ -30,7 +33,7 @@ class BeeSolutionView(APIView):
         rating_serializer = RatingSerializer(data = request.data)
         if rating_serializer.is_valid():
             rating_serializer.save(user = request.user, solution_id = solution_id)
-            return Response({"message":"성공"}, status=status.HTTP_200_OK)
+            return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
         return Response(rating_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommentView(APIView):
