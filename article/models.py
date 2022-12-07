@@ -15,7 +15,7 @@ class Rating(models.Model):
 class Article(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     category = models.CharField(max_length=10)
-    solution = models.ForeignKey(Solution,on_delete=models.CASCADE)    
+    solution = models.ManyToManyField(Solution, related_name='connected_article')    
     content = models.TextField()
     mbti = models.CharField(max_length=50)
     

@@ -13,9 +13,11 @@ class MakeWorryView(APIView):
         my_id = request.user.id
         result = make_solution(my_id)
 
-        worry_serializer = WorrySerializer(data = request.data)
+        worry_serializer = WorrySerializer(data=request.data)
         if worry_serializer.is_valid():
-            worry_serializer.save(user=request.user, solution_id= result)
+            worry_serializer.save(user=request.user)
+            worry_serializer.solution.add(result)
+            
             return Response(worry_serializer.data, status=status.HTTP_200_OK)
         return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -78,15 +80,14 @@ class CommentDetailView(APIView):
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
 
 class MakeSolutionView(APIView):
-    def get(self, request, article_id):
-        pass
-    
     def post(self, request, article_id):
         make_solution_serializer = MakeSolutionSerializer(data=request.data)
         if make_solution_serializer.is_valid():
             make_solution_serializer.save(user=request.user)
             
             latest_idx = Solution.objects.order_by('-pk')[0].pk
+            this_solution = Solution.objects.get(id=latest_idx)
+            this_solution.connected_article.add(article_id)
             make_wise_image(latest_idx)
             
             return Response("저장 완료", status=status.HTTP_200_OK)

@@ -12,11 +12,11 @@ class CommentSerializer(serializers.ModelSerializer):
 class BeeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
-        fields = ['wise','id'] # wise > solution_image로 변경할 것 
+        fields = ['solution_image','id']
         read_only_fields=['id',]
        
 class WorrySerializer(serializers.ModelSerializer):
-    solution=BeeSolutionSerializer(read_only = True)
+    solution = BeeSolutionSerializer(read_only=True)
     comment_set = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Article
