@@ -29,7 +29,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class UserprofileSerializer(serializers.ModelSerializer):
     article_set = WorrySerializer(read_only = True, many=True)
-    solution_set = MakeSolutionSerializer(read_only = True)
+    solution_set = MakeSolutionSerializer(read_only = True, many=True)
 
     class Meta:
         model = User

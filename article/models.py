@@ -4,7 +4,7 @@ from users.models import User
 class Solution(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     solution_image = models.ImageField(blank=True, null=True, upload_to="")
-    # nickname = models.CharField(max_length=20, null=True)
+    nickname = models.CharField(max_length=20, null=True)
     wise = models.TextField()
 
 class Rating(models.Model):
