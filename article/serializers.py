@@ -5,7 +5,8 @@ from article.models import Article, Solution, Rating
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['user','article','content']       
+        fields = ['content','id',]
+        read_only_fields=['id',]       
         
         
 class BeeSolutionSerializer(serializers.ModelSerializer):
@@ -16,10 +17,11 @@ class BeeSolutionSerializer(serializers.ModelSerializer):
        
 class WorrySerializer(serializers.ModelSerializer):
     solution=BeeSolutionSerializer(read_only = True)
+    comment_set = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Article
-        fields=['category','content','mbti','solution','id']
-        read_only_fields=['id',]
+        fields=['category','content','mbti','solution','id', 'comment_set', 'user']
+        read_only_fields=['id','user']
          
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:

@@ -56,9 +56,10 @@ class CommentView(APIView):
             comment_serializer.save(user = request.user, article_id = article_id)
             return Response(comment_serializer.data,status=status.HTTP_201_CREATED)
         else:
-            return Response(comment_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-    def put(self,request,comment_id):
+            return Response(comment_serializer.errors,status=status.HTTP_400_BAD_REQUEST)    
+
+class CommentDetailView(APIView):
+    def put(self,request,article_id,comment_id):
         comment = Comment.objects.get(id=comment_id)
         if request.user == comment.user:
             comment_serializer = CommentSerializer(comment,data=request.data)
@@ -68,14 +69,13 @@ class CommentView(APIView):
             else:
                 return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
     
-    def delete(self,request,comment_id):
+    def delete(self,request,article_id,comment_id):
         comment = Comment.objects.get(id=comment_id)
         if request.user == comment.user:
             comment.delete()
             return Response({"message":"삭제 되었습니다."},status=status.HTTP_200_OK)
         else:
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
-
 
 class MakeSolutionView(APIView):
     def get(self, request, article_id):
@@ -92,12 +92,6 @@ class MakeSolutionView(APIView):
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
-
-class ArticleView(APIView):
-    def get(self,request):
-       articles = Article.objects.all()
-       article_serializer = WorrySerializer(articles,many=True) 
-       return Response(article_serializer.data,status=status.HTTP_200_OK)
 
 class ArticleDetailView(APIView):
     def get(self,request,article_id):
@@ -125,7 +119,7 @@ class ArticleDetailView(APIView):
         else:
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
         
-class MainView(APIView): # main view와 합쳐지는 지 생각해봐야함
+class MainView(APIView):
     def get(self, request, category_id):
 
         if 0 < category_id < 9 :

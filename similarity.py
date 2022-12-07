@@ -12,21 +12,20 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def make_solution(my_id):
+  
+    # 새로 회원가입 한 유저의 경우 1번 솔루션에 2점 주고 시작 > rating모델에 회원가입한 유저 id반영
+    if not Rating.objects.filter(user_id = my_id).exists():
+        test_rating = Rating(user_id = my_id, solution_id = 1, rating=2)
+        test_rating.save()
+        
     ratings = Rating.objects.all().values()
     ratings_pandas = pd.DataFrame(ratings)
-    chars = UserChr.objects.all().values()
-    chars_pandas = pd.DataFrame(chars)
-
-    chars = UserChr.objects.all().values()
-    chars_pandas = pd.DataFrame(chars)
-
-    solution_rating = pd.merge(ratings_pandas, chars_pandas, on='user_id') #user_id로 병합 
 
     # 데이터프레임을 출력했을때 더 많은 열이 보이도록 함
     pd.set_option('display.max_columns', 10)
     pd.set_option('display.width', 300)
 
-    solution_user = solution_rating.pivot_table('rating', index='user_id', columns='solution_id')
+    solution_user = ratings_pandas.pivot_table('rating', index='user_id', columns='solution_id')
 
     # 평점을 부여안한 솔루션은 그냥 0 이라고 부여
     solution_user = solution_user.fillna(0)
