@@ -20,8 +20,8 @@ class WorrySerializer(serializers.ModelSerializer):
     comment_set = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = Article
-        fields=['category','content','mbti','solution','id', 'comment_set']
-        read_only_fields=['id',]
+        fields=['category','content','mbti','solution','id', 'comment_set', 'user']
+        read_only_fields=['id','user']
          
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
