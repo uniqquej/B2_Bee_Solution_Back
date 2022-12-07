@@ -12,6 +12,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def make_solution(my_id):
+    # 새로 회원가입 한 유저의 경우 userchr 임의 지정 > 회원가입시 유저chr 받으면 지우면 됨
+    if not UserChr.objects.filter(user_id = my_id).exists():
+        test_rating = UserChr(user_id = my_id, mbti = 'ISFJ', gender='W', age=20)
+        test_rating.save()
+        
     ratings = Rating.objects.all().values()
     ratings_pandas = pd.DataFrame(ratings)
     chars = UserChr.objects.all().values()
@@ -30,6 +35,7 @@ def make_solution(my_id):
 
     # 평점을 부여안한 솔루션은 그냥 0 이라고 부여
     solution_user = solution_user.fillna(0)
+    print(solution_user)
     
     # 유저 간 코사인 유사도를 구함
     user_based_collab = cosine_similarity(solution_user, solution_user)
