@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from similarity import make_solution
 from makesolution import make_wise_image
-from article.models import Solution, Article, Rating
+from article.models import Solution, Article, Rating, Comment
 from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer
 
 
@@ -53,10 +53,28 @@ class CommentView(APIView):
     def post(self,request,article_id):
         comment_serializer = CommentSerializer(data=request.data)
         if comment_serializer.is_valid():
-            comment_serializer.save(comment_user = request.user, article_id = article_id)
+            comment_serializer.save(user = request.user, article_id = article_id)
             return Response(comment_serializer.data,status=status.HTTP_201_CREATED)
         else:
             return Response(comment_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self,request,comment_id):
+        comment = Comment.objects.get(id=comment_id)
+        if request.user == comment.user:
+            comment_serializer = CommentSerializer(comment,data=request.data)
+            if comment_serializer.is_valid():
+                comment_serializer.save()
+                return Response(comment_serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
+    
+    def delete(self,request,comment_id):
+        comment = Comment.objects.get(id=comment_id)
+        if request.user == comment.user:
+            comment.delete()
+            return Response({"message":"삭제 되었습니다."},status=status.HTTP_200_OK)
+        else:
+            return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
 
 
 class MakeSolutionView(APIView):
@@ -75,95 +93,56 @@ class MakeSolutionView(APIView):
         else:
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
 
-class MainView(APIView):
+class ArticleView(APIView):
     def get(self,request):
-        main_articles = Article.objects.all()
-        main_serializer = WorrySerializer(main_articles,many=True)
-        return Response(main_serializer.data,status=status.HTTP_200_OK)
-    
-class MainDetailView(APIView):
+       articles = Article.objects.all()
+       article_serializer = WorrySerializer(articles,many=True) 
+       return Response(article_serializer.data,status=status.HTTP_200_OK)
+
+class ArticleDetailView(APIView):
     def get(self,request,article_id):
-        main_detail = Article.objects.get(id=article_id)
-        main_detail_serializer = WorrySerializer(main_detail)
-        return Response(main_detail_serializer.data,status=status.HTTP_200_OK)
+        article_detail = Article.objects.get(id=article_id)
+        article_detail_serializer = WorrySerializer(article_detail)
+        return Response(article_detail_serializer.data,status=status.HTTP_200_OK)
     
     def put(self,request,article_id):
-        main_aritcle = Article.objects.get(id= article_id)
-        main_serializer = WorrySerializer(main_aritcle,data=request.data)
-        if request.user == main_aritcle.user:
-            if main_serializer.is_valid():
-                main_serializer.save()
-                return Response(main_serializer.data,status=status.HTTP_200_OK)
+        aritcle = Article.objects.get(id= article_id)
+        article_serializer = WorrySerializer(aritcle,data=request.data)
+        if request.user == aritcle.user:
+            if article_serializer.is_valid():
+                article_serializer.save()
+                return Response(article_serializer.data,status=status.HTTP_200_OK)
             else:
-                return Response(main_serializer.errors,status=status.__name__)
+                return Response(article_serializer.errors,status=status.__name__)
         else:
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
     
     def delete(self,request,article_id):
-        main_delete = Article.objects.get(id=article_id)
-        if request.user == main_delete.user:
-            main_delete.delete()
+        article_delete = Article.objects.get(id=article_id)
+        if request.user == article_delete.user:
+            article_delete.delete()
             return Response({"message":"삭제 완료"},status=status.HTTP_200_OK)
         else:
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
         
-class ArticleListView(APIView): # main view와 합쳐지는 지 생각해봐야함
+class MainView(APIView): # main view와 합쳐지는 지 생각해봐야함
     def get(self, request, category_id):
 
-        if category_id == 1:
-            category = '음식'
-        elif category_id == 2:
-            category = '취미'
-        elif category_id == 3:
-            category = '취업'
-        elif category_id == 4:
-            category = '일상'
-        elif category_id == 5:
-            category = '투자'
-        elif category_id == 6:
-            category = '연애'
-        elif category_id == 7:
-            category = '스포츠'
-        elif category_id == 8:
-            category = '연예'
-
-        if category_id == 9:
-            mbti = 'ENFP'
-        elif category_id == 10:
-            mbti = 'ENFJ'
-        elif category_id == 11:
-            mbti = 'ENTP'
-        elif category_id == 12:
-            mbti = 'ENTJ'
-        elif category_id == 13:
-            mbti = 'ESFP'
-        elif category_id == 14:
-            mbti = 'ESFJ'
-        elif category_id == 15:
-            mbti = 'ESTP'
-        elif category_id == 16:
-            mbti = 'ESTJ'
-        elif category_id == 17:
-            mbti = 'INFP'
-        elif category_id == 18:
-            mbti = 'INFJ'
-        elif category_id == 19:
-            mbti = 'INTP'
-        elif category_id == 20:
-            mbti = 'INTJ'
-        elif category_id == 21:
-            mbti = 'ISFP'
-        elif category_id == 22:
-            mbti = 'ISFJ'
-        elif category_id == 23:
-            mbti = 'ISTP'
-        elif category_id == 24:
-            mbti = 'ISTJ'
-
-        if category_id >=9:
-            articles = Article.objects.filter(mbti=mbti)
-        else:
+        if 0 < category_id < 9 :
+            category_list = ['음식','취미','취업','일상','투자','연애','스포츠','연예']
+            category = category_list[category_id - 1]
+        elif category_id >= 9:
+            mbti_list = ['ENFP','ENFJ','ENTP','ENTJ','ESFP','ESFJ','ESTP','ESTJ',
+                        'INFP','INFJ','INTP','INTJ','ISFP','ISFJ','ISTP','ISTJ']
+            mbti = mbti_list[category_id - 9]
+        
+        if category_id == 0:
+            articles = Article.objects.all()
+            
+        elif category_id < 9:
             articles = Article.objects.filter(category = category)
+        else:
+            articles = Article.objects.filter(mbti=mbti)
 
         article_serializer = WorrySerializer(articles, many = True)
         return Response(article_serializer.data, status=status.HTTP_200_OK)

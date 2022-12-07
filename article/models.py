@@ -4,7 +4,7 @@ from users.models import User
 class Solution(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     solution_image = models.ImageField(blank=True, null=True, upload_to="")
-    # category = models.CharField(max_length=10)
+    # nickname = models.CharField(max_length=20, null=True)
     wise = models.TextField()
 
 class Rating(models.Model):
@@ -23,6 +23,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     article = models.ForeignKey(Article,on_delete=models.CASCADE)
     content = models.TextField()
-    create_at = models.DateTimeField(auto_created=True)
+    create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     

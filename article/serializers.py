@@ -5,11 +5,7 @@ from article.models import Article, Solution, Rating
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['user','article','content']
-        read_only_fields = ['article',]
-        extra_kwargs = {
-            'content':{'write_only':True}
-        }
+        fields = ['user','article','content']       
         
         
 class BeeSolutionSerializer(serializers.ModelSerializer):
@@ -24,9 +20,6 @@ class WorrySerializer(serializers.ModelSerializer):
         model = Article
         fields=['category','content','mbti','solution','id']
         read_only_fields=['id',]
-        extra_kwargs = {
-            'content':{'write_only':True}
-        }
          
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
