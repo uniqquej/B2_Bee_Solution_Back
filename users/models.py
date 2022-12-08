@@ -27,6 +27,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     username = models.CharField(max_length=50, blank=False, null=True, unique=True)
     profile_img = models.ImageField(default='profile_image/profile_default.jpg', upload_to='profile_image')
+    user_chr_check = models.BooleanField(default=False)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -52,7 +53,7 @@ class User(AbstractBaseUser):
 
 
 class UserChr(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    mbti = models.CharField(max_length=4)
-    age = models.IntegerField()
-    gender = models.CharField(max_length=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mbti = models.CharField(max_length=4, null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    gender = models.CharField(max_length=1, null=True, blank=True)
