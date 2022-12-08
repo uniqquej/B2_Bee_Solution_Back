@@ -5,8 +5,12 @@ from similarity import make_solution
 from makesolution import make_wise_image
 from article.models import Solution, Article, Rating, Comment
 from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer
+from rest_framework.pagination import PageNumberPagination 
+from article.pagination import PaginationHandlerMixin
 
-
+class ArticlePagination(PageNumberPagination): # 한 페이지에 게시물 3개
+    page_size = 3
+    
 class MakeWorryView(APIView):
     def post(self, request):
         my_id = request.user.id
@@ -112,9 +116,11 @@ class ArticleDetailView(APIView):
         else:
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
         
-class MainView(APIView):
+class MainView(APIView, PaginationHandlerMixin):
+    pagination_class = ArticlePagination
+    serializer_class = WorrySerializer
+    
     def get(self, request, category_id):
-
         if 0 < category_id < 9 :
             category_list = ['음식','취미','취업','일상','투자','연애','스포츠','연예']
             category = category_list[category_id - 1]
@@ -130,6 +136,11 @@ class MainView(APIView):
             articles = Article.objects.filter(category = category)
         else:
             articles = Article.objects.filter(mbti=mbti)
+        
+        page = self.paginate_queryset(articles)
 
-        article_serializer = WorrySerializer(articles, many = True)
-        return Response(article_serializer.data, status=status.HTTP_200_OK)
+        if page is not None:
+            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+        else:
+            serializer = self.serializer_class(articles, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
