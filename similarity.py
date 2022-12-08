@@ -12,7 +12,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def make_solution(my_id):
-  
     # 새로 회원가입 한 유저의 경우 1번 솔루션에 2점 주고 시작 > rating모델에 회원가입한 유저 id반영
     if not Rating.objects.filter(user_id = my_id).exists():
         test_rating = Rating(user_id = my_id, solution_id = 1, rating=2)
@@ -41,13 +40,39 @@ def make_solution(my_id):
     user = user_based_collab[my_id].sort_values(ascending=False).index[1]
 
     # 뽑은 유저가 좋아했던 솔루션을 평점 내림차순으로 출력
-    result = solution_user.query(f"user_id == {user}").sort_values(ascending=False, by=user, axis=1) #axis=1 : 열방향으로 동작
+    result = solution_user.query(f"user_id == {user}").sort_values(ascending=False, by=user, axis=1)
+
+    solution_score0 = []
+    solution_score2 = []
+    solution_score4 = []
     
-    solution_ids = [] # 평점이 4점인 솔루션 id list
     for i in range(len(result.values[0])):
         if result.values[0][i]==4:
-            solution_ids.append(list(result.columns)[i])
+            solution_score4.append(list(result.columns)[i])
+        elif result.values[0][i]==2:
+            solution_score2.append(list(result.columns)[i])
+        else:
+            solution_score0.append(list(result.columns)[i])
+        
+    select_score = random.choices([0,2,4], weights = [0.1, 0.2, 0.7])
+
+    choice_list = []
     
-    solution_id = random.choice(solution_ids) # 랜덤으로 solution_id 반환
+    if select_score[0] == 4:
+        if solution_score4:
+            choice_list = solution_score4
+        else:
+            choice_list = solution_score2
+    elif select_score[0] == 2:
+        if solution_score2:
+            choice_list = solution_score2
+        else:
+            choice_list = solution_score4
+    else:
+        coice_list = solution_score0
+    
+    if not choice_list:
+        choice_list = solution_score0
+    
+    solution_id = random.choice(choice_list)
     return solution_id
-    
