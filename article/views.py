@@ -9,16 +9,12 @@ from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSer
 
 class MakeWorryView(APIView):
     def post(self, request):
-        
         my_id = request.user.id
         result = make_solution(my_id)
         worry_serializer = WorrySerializer(data=request.data)
         if worry_serializer.is_valid():
-            worry_serializer.save(user=request.user)
-            this_pk = Article.objects.order_by('-pk')[0].pk
-            thisarticle = Article.objects.get(id=this_pk)
+            thisarticle = worry_serializer.save(user=request.user)
             thisarticle.solution.add(result)
-            
             return Response(worry_serializer.data, status=status.HTTP_200_OK)
         return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -84,11 +80,8 @@ class MakeSolutionView(APIView):
     def post(self, request, article_id):
         make_solution_serializer = MakeSolutionSerializer(data=request.data)
         if make_solution_serializer.is_valid():
-            make_solution_serializer.save(user=request.user)
-            
-            latest_idx = Solution.objects.order_by('-pk')[0].pk
-            make_wise_image(latest_idx)
-            
+            thissolution = make_solution_serializer.save(user=request.user)
+            make_wise_image(thissolution.pk)
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
