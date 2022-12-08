@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import User
+from users.models import User, UserChr
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from article.serializers import WorrySerializer, MakeSolutionSerializer
 
@@ -16,7 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
-
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -34,3 +33,15 @@ class UserprofileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username", 'profile_img', 'article_set', 'solution_set']
+        
+        
+class UserChrSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserChr
+        fields = ["mbti", "age", "gender"]
+        read_only_fields = ['user',]
+        
+class UserChrCheckSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('user_chr_check',)
