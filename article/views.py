@@ -93,6 +93,11 @@ class MakeSolutionView(APIView):
             make_wise_image(thissolution.pk)
             start_rating = Rating(user_id=request.user.id, solution_id =thissolution.pk, rating=4)
             start_rating.save()
+
+            if article_id:
+                article = Article.objects.get(id=article_id)
+                article.solution.add(thissolution.pk)
+            
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
