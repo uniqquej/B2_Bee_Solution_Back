@@ -46,20 +46,18 @@ class BeeSolutionView(APIView):
                 return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
         return Response(rating_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CommentView(APIView,PaginationHandlerMixin):
-    comment_pagination = ArticlePagination
-    serializer_class = CommentSerializer
+class CommentView(APIView,PaginationHandlerMixin):    
     def get(self,request,article_id):
         article=  Article.objects.get(id=article_id)
         comments = article.comment_set.all()
-        # comment_serializer = CommentSerializer(comments,many=True)        
-        page = self.paginate_queryset(comments)
-        if page is not None:
-            serializer = self.get_paginated_response(self.serializer_class(page,many=True).data)
-        else:
-            serializer = self.get_paginated_response(comments,many=True)
-        # return Response(comment_serializer.data,status=status.HTTP_200_OK)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        comment_serializer = CommentSerializer(comments,many=True)        
+        # page = self.paginate_queryset(comments)
+        # if page is not None:
+        #     serializer = self.get_paginated_response(self.serializer_class(page,many=True).data)
+        # else:
+        #     serializer = self.get_paginated_response(comments,many=True)
+        return Response(comment_serializer.data,status=status.HTTP_200_OK)
+        # return Response(serializer.data,status=status.HTTP_200_OK)
     
     def post(self,request,article_id):
         comment_serializer = CommentSerializer(data=request.data)
