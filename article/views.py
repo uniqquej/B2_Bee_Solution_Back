@@ -94,6 +94,8 @@ class MakeSolutionView(APIView):
         if make_solution_serializer.is_valid():
             thissolution = make_solution_serializer.save(user=request.user)
             make_wise_image(thissolution.pk)
+            start_rating = Rating(user_id=request.user.id, solution_id =thissolution.pk, rating=4)
+            start_rating.save()
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
