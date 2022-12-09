@@ -169,3 +169,9 @@ class MainView(APIView, PaginationHandlerMixin):
         else:
             serializer = self.serializer_class(articles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class AllBeeSolutionView(APIView):
+    def get(self, request):
+        bee_solution = Solution.objects.all().order_by('-pk')
+        bee_solution_serializer = BeeSolutionSerializer(bee_solution, many = True)
+        return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
