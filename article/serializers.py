@@ -7,8 +7,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['content','id',]
         read_only_fields=['id',]       
-        
-        
+             
 class BeeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
@@ -21,7 +20,13 @@ class WorrySerializer(serializers.ModelSerializer):
         model = Article
         fields=['category','content','mbti','id', 'comment_set', 'user', 'solution']
         read_only_fields=['id','user', 'solution']
-         
+        
+class SolutionDetailSerializer(serializers.ModelSerializer):
+    solution = BeeSolutionSerializer(read_only = True, many=True)
+    class Meta :
+        model = Article
+        fields = ['solution',]
+                
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating

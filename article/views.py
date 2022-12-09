@@ -4,7 +4,7 @@ from rest_framework import status
 from similarity import make_solution
 from makesolution import make_wise_image
 from article.models import Solution, Article, Rating, Comment
-from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer
+from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer, SolutionDetailSerializer
 from rest_framework.pagination import PageNumberPagination 
 from article.pagination import PaginationHandlerMixin
 
@@ -81,6 +81,11 @@ class CommentDetailView(APIView):
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
 
 class MakeSolutionView(APIView):
+    def get(self, request, article_id):
+        article=  Article.objects.get(id=article_id)
+        solution_serializer = SolutionDetailSerializer(article)
+        return Response(solution_serializer.data, status=status.HTTP_200_OK)
+    
     def post(self, request, article_id):
         make_solution_serializer = MakeSolutionSerializer(data=request.data)
         if make_solution_serializer.is_valid():
@@ -91,6 +96,24 @@ class MakeSolutionView(APIView):
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
+        
+class SolutionDetailView(APIView):
+    def post(self, request, article_id, solution_id):
+        solution_detail_serializer = RatingSerializer(data = request.data)
+        if solution_detail_serializer.is_valid():
+            solution_detail_serializer.save(solution_id = solution_id, user = request.user)
+            return Response({"message":"평가완료"}, status=status.HTTP_200_OK)
+        return Response(solution_detail_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, article_id, solution_id):
+        solution = Solution.objects.get(id=solution_id)
+        if request.user == solution.user:
+            solution.delete()
+            return Response({"message":"삭제 되었습니다."},status=status.HTTP_200_OK)
+        else:
+            return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
+    
+    
 
 class ArticleDetailView(APIView):
     def get(self,request,article_id):
