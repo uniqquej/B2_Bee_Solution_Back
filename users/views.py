@@ -1,13 +1,17 @@
 from users.models import User
-from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer
+from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer, UpdateUserSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from users.models import User, UserChr
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.generics import get_object_or_404
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+
+
 
 
 class UserCreateView(APIView):
@@ -136,3 +140,13 @@ class UserChrView(APIView):
             check_serializer.save()
             print(check_serializer)
             return Response({"message":"수정완료!"}, status=status.HTTP_200_OK)
+
+
+
+# username 변경
+class UpdateProfileView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UpdateUserSerializer
+
+    
