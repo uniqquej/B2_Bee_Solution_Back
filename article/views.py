@@ -48,7 +48,7 @@ class BeeSolutionView(APIView):
 
 class CommentView(APIView,PaginationHandlerMixin):    
     def get(self,request,article_id):
-        article=  Article.objects.get(id=article_id)
+        article=  Article.objects.get(id=article_id,cUser_id = request.user.id)        
         comments = article.comment_set.all()
         comment_serializer = CommentSerializer(comments,many=True)        
         # page = self.paginate_queryset(comments)
