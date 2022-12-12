@@ -11,6 +11,9 @@ from article.pagination import PaginationHandlerMixin
 class ArticlePagination(PageNumberPagination): # 한 페이지에 게시물 3개
     page_size = 3
     
+class CommentPagination(PageNumberPagination): # 한 페이지에 게시물 3개
+    page_size = 5
+    
 class MakeWorryView(APIView):
     def post(self, request):
         my_id = request.user.id
@@ -46,18 +49,18 @@ class BeeSolutionView(APIView):
                 return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
         return Response(rating_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CommentView(APIView,PaginationHandlerMixin):    
+class CommentView(APIView,PaginationHandlerMixin):
+    pagination_class = CommentPagination
+    serializer_class = CommentSerializer 
     def get(self,request,article_id):
-        article=  Article.objects.get(id=article_id,cUser_id = request.user.id)        
+        article=  Article.objects.get(id=article_id)        
         comments = article.comment_set.all()
-        comment_serializer = CommentSerializer(comments,many=True)        
-        # page = self.paginate_queryset(comments)
-        # if page is not None:
-        #     serializer = self.get_paginated_response(self.serializer_class(page,many=True).data)
-        # else:
-        #     serializer = self.get_paginated_response(comments,many=True)
-        return Response(comment_serializer.data,status=status.HTTP_200_OK)
-        # return Response(serializer.data,status=status.HTTP_200_OK)
+        page = self.paginate_queryset(comments)
+        if page is not None:
+            serializer = self.get_paginated_response(self.serializer_class(page,many=True).data)
+        else:
+            serializer = self.get_paginated_response(comments,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
     
     def post(self,request,article_id):
         comment_serializer = CommentSerializer(data=request.data)
