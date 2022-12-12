@@ -2,7 +2,6 @@ from rest_framework import serializers
 from users.models import User, UserChr
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from article.serializers import WorrySerializer, MakeSolutionSerializer
-import django.contrib.auth.password_validation as validate_password
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -46,26 +45,3 @@ class UserChrCheckSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('user_chr_check',)
-
-
-# username 변경
-class UpdateUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username', )
-
-    def validate_username(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "This username is already in use."})
-        return value
-
-    def put(self, instance, validated_data):
-        user = self.context['request'].user
-
-        if user.pk != instance.pk:
-            raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
-
-        instance.username = validated_data['username']
-        instance.save()
-        return instance

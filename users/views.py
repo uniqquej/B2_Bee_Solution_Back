@@ -1,5 +1,5 @@
 from users.models import User
-from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer, UpdateUserSerializer
+from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -109,6 +109,15 @@ class ProfileView(APIView):
         else:
             return Response({"message":f"${update_serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, user_id):
+        profile_delete = User.objects.get(id=user_id)
+        if request.user == profile_delete:
+            request.user.delete()
+            return Response({"message":"탈퇴완료!"}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({"message":"탈퇴실패!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class UserChrView(APIView):
     '''
@@ -140,13 +149,3 @@ class UserChrView(APIView):
             check_serializer.save()
             print(check_serializer)
             return Response({"message":"수정완료!"}, status=status.HTTP_200_OK)
-
-
-
-# username 변경
-class UpdateProfileView(generics.UpdateAPIView):
-    queryset = User.objects.all()
-    permission_classes = (IsAuthenticated,)
-    serializer_class = UpdateUserSerializer
-
-    
