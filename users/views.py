@@ -6,8 +6,12 @@ from rest_framework.response import Response
 from users.models import User, UserChr
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.generics import get_object_or_404
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+
+
 
 
 class UserCreateView(APIView):
@@ -104,6 +108,15 @@ class ProfileView(APIView):
             return Response(update_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({"message":f"${update_serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, user_id):
+        profile_delete = User.objects.get(id=user_id)
+        if request.user == profile_delete:
+            request.user.delete()
+            return Response({"message":"탈퇴완료!"}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({"message":"탈퇴실패!"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class UserChrView(APIView):
