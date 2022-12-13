@@ -2,6 +2,7 @@ from django.urls import path
 from article import views
 urlpatterns = [
     path('<int:category_id>/',views.MainView.as_view(),name='main'),
+    path('<int:category_id>/profile/',views.ProfileArticleView.as_view(),name='profile_article'),
     path('worry/', views.MakeWorryView.as_view(), name = 'make_worry'),
     path('worry/<int:solution_id>/',views.BeeSolutionView.as_view(), name = 'bee_solution' ),
     path('<int:article_id>/comment/',views.CommentView.as_view()),    

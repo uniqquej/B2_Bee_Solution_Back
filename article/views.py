@@ -189,3 +189,34 @@ class AllBeeSolutionView(APIView):
         bee_solution = Solution.objects.all().order_by('-pk')
         bee_solution_serializer = BeeSolutionSerializer(bee_solution, many = True)
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
+
+
+class ProfileArticleView(APIView, PaginationHandlerMixin):
+    pagination_class = ArticlePagination
+    serializer_class = WorrySerializer
+    
+    def get(self, request, category_id):
+        
+        if 0 < category_id < 9 :
+            category_list = ['음식','취미','취업','일상','투자','연애','스포츠','연예']
+            category = category_list[category_id - 1]
+        elif category_id >= 9:
+            mbti_list = ['ENFP','ENFJ','ENTP','ENTJ','ESFP','ESFJ','ESTP','ESTJ',
+                        'INFP','INFJ','INTP','INTJ','ISFP','ISFJ','ISTP','ISTJ']
+            mbti = mbti_list[category_id - 9]
+        
+        if category_id == 0:
+            articles = Article.objects.filter(user = request.user)
+            
+        elif category_id < 9:
+            articles = Article.objects.filter(category = category, user = request.user)
+        else:
+            articles = Article.objects.filter(mbti=mbti, user = request.user)
+        
+        page = self.paginate_queryset(articles)
+
+        if page is not None:
+            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+        else:
+            serializer = self.serializer_class(articles, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
