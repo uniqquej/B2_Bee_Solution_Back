@@ -8,10 +8,10 @@ from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSer
 from rest_framework.pagination import PageNumberPagination 
 from article.pagination import PaginationHandlerMixin
 
-class ArticlePagination(PageNumberPagination): # 한 페이지에 게시물 3개
+class ArticlePagination(PageNumberPagination):
     page_size = 3
     
-class CommentPagination(PageNumberPagination): # 한 페이지에 게시물 3개
+class CommentPagination(PageNumberPagination): 
     page_size = 5
     
 class MakeWorryView(APIView):
@@ -189,6 +189,18 @@ class AllBeeSolutionView(APIView):
         bee_solution = Solution.objects.all().order_by('-pk')
         bee_solution_serializer = BeeSolutionSerializer(bee_solution, many = True)
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
+
+
+class CommentLikeView(APIView):
+    def post(self, request,article_id,comment_id):
+        me = request.user
+        comment = Comment.objects.get(id = comment_id)
+        if me in comment.likes.all():
+            comment.likes.remove(me)
+            return Response({"message":"좋아요취소"}, status=status.HTTP_200_OK)
+        else:
+            comment.likes.add(me)
+            return Response({"message":"좋아요"}, status=status.HTTP_200_OK)
 
 
 class ProfileArticleView(APIView, PaginationHandlerMixin):

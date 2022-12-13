@@ -3,10 +3,15 @@ from article.models import Article,Comment,Solution
 from article.models import Article, Solution, Rating
 
 class CommentSerializer(serializers.ModelSerializer):
+    like_count = serializers.SerializerMethodField(read_only=True)
+    
+    def get_like_count(self, obj):
+        return obj.likes.count()
+    
     class Meta:
         model = Comment
-        fields = ['content','id','user',]
-        read_only_fields=['id','user',]       
+        fields = ['content','id','user','likes','like_count']
+        read_only_fields=['id','user','likes',]       
              
 class BeeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
