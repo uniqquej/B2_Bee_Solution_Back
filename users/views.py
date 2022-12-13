@@ -1,5 +1,5 @@
 from users.models import User
-from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer
+from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer, ChangePasswordSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -149,3 +149,13 @@ class UserChrView(APIView):
             check_serializer.save()
             print(check_serializer)
             return Response({"message":"수정완료!"}, status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(APIView):
+    def put(self, request):
+        cur_user = User.objects.get(id = request.user.id)
+        user_serializer = ChangePasswordSerializer(cur_user, data = request.data, partial=True)
+        if user_serializer.is_valid(raise_exception=True):
+            user_serializer.save()
+            return Response(user_serializer.data, status=status.HTTP_200_OK)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
