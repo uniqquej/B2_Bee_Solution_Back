@@ -69,7 +69,7 @@ def make_solution(my_id):
         else:
             choice_list = solution_score4
     else:
-        coice_list = solution_score0
+        choice_list = solution_score0
     
     if not choice_list:
         choice_list = solution_score0
