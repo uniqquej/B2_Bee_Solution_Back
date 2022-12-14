@@ -11,9 +11,21 @@
 ## 팀명 및 팀원
  * 팀명 : Super Bees - B2조 Bees 는 back-end engineers의 약자로도 표현할 수 있음
 
- * 팀원:
- - 김병문 : 팀장
- - 김동익 : 팀원
- - 오형석 : 팀원
- - 이혜원 : 팀원
- - 최정윤 : 팀원
+ * 팀장 : [김병문](https://github.com/kbm1933)
+ * 팀원 : [김동익](https://github.com/DongIkkk), [오형석](https://github.com/auberr), [이혜원](https://github.com/wonprogrammer), [최정윤](https://github.com/uniqquej)
+ 
+ ## Front-end repo
+- [깃헙으로 이동](https://github.com/kbm1933/B2_Bee_Solution_Front)
+
+## Project Intro Notion
+- [노션으로 이동](https://www.notion.so/Super-Bees-AI-3-AI-Bee-solution-S-A-14f050d1286243889061802f2e7510d2)
+
+ ## ERD
+ ![image](https://user-images.githubusercontent.com/109218139/207600367-5ddef6ea-a27c-4dcf-beb7-5ff686d59c97.png)
+
+## API
+![image](https://user-images.githubusercontent.com/109218139/207600677-2cf3845c-b31e-43dc-af81-17cdb828f1c3.png)
+![image](https://user-images.githubusercontent.com/109218139/207600744-dd0c1e74-a5f9-4d54-8c18-ec1489f68738.png)
+![image](https://user-images.githubusercontent.com/109218139/207601278-5466b8ca-85cc-41d2-9727-7e71ae302645.png)
+![image](https://user-images.githubusercontent.com/109218139/207601466-f7df91ff-a197-472c-bf3d-f42d95591bc5.png)
+![image](https://user-images.githubusercontent.com/109218139/207601576-f143a4a1-d361-483a-a652-1257c1f80b59.png)
