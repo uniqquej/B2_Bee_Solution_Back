@@ -3,40 +3,22 @@ from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, U
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from users.models import User, UserChr
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.generics import get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics
-
-
 
 
 class UserCreateView(APIView):
-    def post(self, request):
-        # 가입시 password 1 과 password2 가 일치하지 않을 때
-        if request.data['password'] != request.data['password1']:
-            return Response({"message":f"password가 일치하지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # username 의 길이가 50자 이상이거나 없을때
-        if len(request.data['username'])>50 or len(request.data['username'])<1:
-            return Response({"message":f"username이 50자를 넘거나 1자이내일 수 없습니다"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # username 이 존재할때 
-        exist_user = User.objects.filter(username=request.data['username'])
-        if exist_user:
-            return Response({"message":f"다른 아이디를 사용해주세요."}, status=status.HTTP_400_BAD_REQUEST)
-        
+    def post(self, request): 
         serializer = UserSerializer(data=request.data)
         
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({"message":"가입완료!"}, status=status.HTTP_201_CREATED)
         else:
             return Response({"message":f"${serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
-
 
 class UserAuthView(APIView):
     def get(self, request):
