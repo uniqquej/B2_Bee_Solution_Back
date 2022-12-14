@@ -138,10 +138,10 @@ class UserChrView(APIView):
 class ChangePasswordView(APIView):
     permissions_classes = [IsAuthenticated]
      
-    def put(self, request):
-        cur_user = User.objects.get(id = request.user.id)
-        user_serializer = ChangePasswordSerializer(cur_user, data = request.data, partial=True)
-        if user_serializer.is_valid(raise_exception=True):
-            user_serializer.save()
-            return Response(user_serializer.data, status=status.HTTP_200_OK)
-        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request, user_id):
+        user = User.objects.get(id = request.user.id)
+        serializer = ChangePasswordSerializer(user, data = request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
