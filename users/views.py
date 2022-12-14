@@ -8,7 +8,11 @@ from rest_framework.generics import get_object_or_404
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 from rest_framework.permissions import IsAuthenticated
-
+from django.shortcuts import redirect
+import requests
+import json 
+import string
+import random
 
 class UserCreateView(APIView):
     def post(self, request): 
@@ -121,7 +125,6 @@ class UserChrView(APIView):
         user_chr_serializer = UserChrSerializer(data=request.data)
         if user_chr_serializer.is_valid():
             user_chr_serializer.save(user_id=user_id)
-            print(user_chr_serializer)
             return Response({"message":"생성완료!"}, status=status.HTTP_200_OK)
         else:
             return Response({"message":f"${user_chr_serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
@@ -131,13 +134,11 @@ class UserChrView(APIView):
         check_serializer = UserChrCheckSerializer(user, data=request.data)
         if check_serializer.is_valid():
             check_serializer.save()
-            print(check_serializer)
             return Response({"message":"수정완료!"}, status=status.HTTP_200_OK)
 
 
 class ChangePasswordView(APIView):
     permissions_classes = [IsAuthenticated]
-     
     def put(self, request, user_id):
         user = User.objects.get(id = request.user.id)
         serializer = ChangePasswordSerializer(user, data = request.data, partial=True)
@@ -145,3 +146,75 @@ class ChangePasswordView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class KakaoSignInView(APIView):
+    def get(self, request):
+        client_id = '383932bc9488431b9961d6fc0b2e5cc8'
+        redirect_uri = "http://127.0.0.1:5500/kakao.html"
+        return redirect(
+            f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
+        )
+
+class KakaoSignInCallbackView(APIView):
+    def post(self, request):
+
+        try:
+            code = json.loads(request.body)
+            code = code["code"]
+            client_id = '3e14ee98dc81007009e23c953ca452c8'
+            redirect_uri = "http://127.0.0.1:5500/kakao.html"
+
+            token_request = requests.get(
+                f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}"
+            )
+
+            token_json = token_request.json()
+            error = token_json.get("error",None)
+
+            if error is not None :
+                return Response({"message": "INVALID_CODE"}, status = 400)
+
+            access_token = token_json['access_token']
+
+        except KeyError:
+            return Response({"message" : "INVALID_TOKEN"}, status = 400)
+
+        except access_token.DoesNotExist:
+            return Response({"message" : "INVALID_TOKEN"}, status = 400)
+
+        profile_request = requests.get(
+            "https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"},
+        )
+
+        account_info = profile_request.json()
+        kakao_id = account_info.get("id") 
+
+        if User.objects.filter(username=kakao_id).exists():
+            user = User.objects.get(username=kakao_id)
+            token = CustomTokenObtainPairSerializer.get_token(user)
+            refresh_token = str(token)
+            access_token = str(token.access_token)
+            response = Response(
+                {
+                    "refresh" : refresh_token,
+                    "access": access_token
+                }, status=status.HTTP_200_OK)
+            return response
+
+
+        else:
+            new_pw_len = 10
+            pw_candidate = string.ascii_letters + string.digits + string.punctuation 
+            new_pw = ""
+            for i in range(new_pw_len):
+                new_pw += random.choice(pw_candidate)
+            user = User.objects.create_user(username=kakao_id, password=new_pw)
+            token = CustomTokenObtainPairSerializer.get_token(user)
+            refresh_token = str(token)
+            access_token = str(token.access_token)
+            response = Response(
+                {
+                    "refresh" : refresh_token,
+                    "access": access_token
+                }, status=status.HTTP_200_OK)
+            return response
