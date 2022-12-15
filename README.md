@@ -30,3 +30,10 @@
 ![image](https://user-images.githubusercontent.com/109218139/207601466-f7df91ff-a197-472c-bf3d-f42d95591bc5.png)
 ![image](https://user-images.githubusercontent.com/109218139/207601576-f143a4a1-d361-483a-a652-1257c1f80b59.png)
 
+## 트러블슈팅
+![트러블_페이지네이션](https://user-images.githubusercontent.com/55372753/207770225-b45f451e-d4e5-4683-9a32-f986f7c37ea5.png)
+![트러블_콜드스타트](https://user-images.githubusercontent.com/55372753/207770235-30a4b703-bdc8-40cd-b806-24dd5923a652.png)
+![트러블_키에러](https://user-images.githubusercontent.com/55372753/207770247-ac7c1218-1102-403d-81de-91739add5e28.png)
+![트러블_인덱스에러_1](https://user-images.githubusercontent.com/55372753/207770259-a0690844-82d1-4ae5-91e5-f7e85ad216e0.png)
+![트러블_인덱스에러_2](https://user-images.githubusercontent.com/55372753/207770268-b009f0c5-88b4-44bd-8d25-a3303c24148f.png)
+![트러블_소셜로그인](https://user-images.githubusercontent.com/55372753/207770283-5218086c-71c2-47be-8367-045e7dee98d3.png)
