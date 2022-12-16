@@ -190,8 +190,8 @@ class MainView(APIView, PaginationHandlerMixin):
     serializer_class = WorrySerializer
     
     def get(self, request, category_id):
-        if 0 < category_id < 9 :
-            category_list = ['음식','취미','취업','일상','투자','연애','스포츠','연예']
+        if 0 < category_id < 5 :
+            category_list = ['일상','취미','취업','음식']
             category = category_list[category_id - 1]
         elif category_id >= 9:
             mbti_list = ['ENFP','ENFJ','ENTP','ENTJ','ESFP','ESFJ','ESTP','ESTJ',
@@ -201,7 +201,7 @@ class MainView(APIView, PaginationHandlerMixin):
         if category_id == 0:
             articles = Article.objects.all()
             
-        elif category_id < 9:
+        elif category_id < 5:
             articles = Article.objects.filter(category = category)
         else:
             articles = Article.objects.filter(mbti=mbti)
@@ -244,8 +244,8 @@ class ProfileArticleView(APIView, PaginationHandlerMixin):
     
     def get(self, request, category_id):
         
-        if 0 < category_id < 9 :
-            category_list = ['음식','취미','취업','일상','투자','연애','스포츠','연예']
+        if 0 < category_id < 5 :
+            category_list = ['일상','취미','취업','음식']
             category = category_list[category_id - 1]
         elif category_id >= 9:
             mbti_list = ['ENFP','ENFJ','ENTP','ENTJ','ESFP','ESFJ','ESTP','ESTJ',
@@ -255,7 +255,7 @@ class ProfileArticleView(APIView, PaginationHandlerMixin):
         if category_id == 0:
             articles = Article.objects.filter(user = request.user)
             
-        elif category_id < 9:
+        elif category_id < 5:
             articles = Article.objects.filter(category = category, user = request.user)
         else:
             articles = Article.objects.filter(mbti=mbti, user = request.user)
