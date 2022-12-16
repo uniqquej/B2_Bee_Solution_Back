@@ -20,6 +20,7 @@ class MakeWorryView(APIView):
      
     def post(self, request):
         my_id = request.user.id
+        # worry_cate = [3]
         result = make_solution(my_id)
         worry_serializer = WorrySerializer(data=request.data)
         if worry_serializer.is_valid():
@@ -114,6 +115,10 @@ class MakeSolutionView(APIView):
             start_rating = Rating(user_id=request.user.id, solution_id =thissolution.pk, rating=4)
             start_rating.save()
 
+            request_category = request.data['category']
+            for i in request_category:
+                thissolution.category.add(i)
+            
             if article_id:
                 article = Article.objects.get(id=article_id)
                 article.solution.add(thissolution.pk)
