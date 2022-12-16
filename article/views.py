@@ -20,10 +20,12 @@ class MakeWorryView(APIView):
      
     def post(self, request):
         my_id = request.user.id
-        # worry_cate = [3]
-        result = make_solution(my_id)
+        category_list = ['일상','취미','취업','음식']
+        category = category_list.index(request.data['category'])+1
+        
         worry_serializer = WorrySerializer(data=request.data)
         if worry_serializer.is_valid():
+            result = make_solution(my_id, category)
             thisarticle = worry_serializer.save(user=request.user)
             thisarticle.solution.add(result)
             return Response(worry_serializer.data, status=status.HTTP_200_OK)
