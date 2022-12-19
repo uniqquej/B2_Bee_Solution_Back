@@ -94,7 +94,7 @@ POSTGRES_DB = os.environ.get('POSTGRES_DB','')
 if POSTGRES_DB:
     DATABASES = {
         'default':{
-            'ENGINE': 'django.db.backend.postgresql',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': POSTGRES_DB,
             'USER':os.environ.get('POSTGRES_USER',''),
             'PASSWORD':os.environ.get('POSTGRES_PASSWORD',''),
@@ -105,7 +105,7 @@ if POSTGRES_DB:
 else:
     DATABASES = {
         'default':{
-            'ENGINE':'django.db.backend.sqlite3',
+            'ENGINE':'django.db.backends.sqlite3',
             'NAME':BASE_DIR / 'db.sqlite3',
         }
     }
