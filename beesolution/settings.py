@@ -23,26 +23,6 @@ DEBUG = os.environ.get('DEBUG','0') == '1'
 
 ALLOWED_HOSTS = ['backend',]
 
-POSTGRES_DB = os.environ.get('POSTGRES_DB','')
-if POSTGRES_DB:
-    DATABASES = {
-        'default':{
-            'ENGINE': 'django.db.backend.postgresql',
-            'NAME': POSTGRES_DB,
-            'USER':os.environ.get('POSTGRES_USER',''),
-            'PASSWORD':os.environ.get('POSTGRES_PASSWORD',''),
-            'HOST':os.environ.get('POSTGRES_HOST',''),
-            'PORT':os.environ.get('POSTGRES_PORT', ''),
-        }
-    }
-else:
-    DATABASES = {
-        'default':{
-            'ENGINE':'django.db.backend.sqlite3',
-            'NAME':BASE_DIR / 'db.sqlite3',
-        }
-    }
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -110,12 +90,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "beesolution.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+POSTGRES_DB = os.environ.get('POSTGRES_DB','')
+if POSTGRES_DB:
+    DATABASES = {
+        'default':{
+            'ENGINE': 'django.db.backend.postgresql',
+            'NAME': POSTGRES_DB,
+            'USER':os.environ.get('POSTGRES_USER',''),
+            'PASSWORD':os.environ.get('POSTGRES_PASSWORD',''),
+            'HOST':os.environ.get('POSTGRES_HOST',''),
+            'PORT':os.environ.get('POSTGRES_PORT', ''),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default':{
+            'ENGINE':'django.db.backend.sqlite3',
+            'NAME':BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
