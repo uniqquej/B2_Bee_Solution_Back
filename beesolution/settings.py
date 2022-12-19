@@ -19,9 +19,29 @@ def get_secret(setting,secrets=secrets):
     
 SECRET_KEY = get_secret("SECRET_KEY")
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG','0') == '1'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['backend',]
+
+POSTGRES_DB = os.environ.get('POSTGRES_DB','')
+if POSTGRES_DB:
+    DATABASES = {
+        'default':{
+            'ENGINE': 'django.db.backend.postgresql',
+            'NAME': POSTGRES_DB,
+            'USER':os.environ.get('POSTGRES_USER',''),
+            'PASSWORD':os.environ.get('POSTGRES_PASSWORD',''),
+            'HOST':os.environ.get('POSTGRES_HOST',''),
+            'PORT':os.environ.get('POSTGRES_PORT', ''),
+        }
+    }
+else:
+    DATABASES = {
+        'default':{
+            'ENGINE':'django.db.backend.sqlite3',
+            'NAME':BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -65,10 +85,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:5500',
-]
-
+# CORS_ALLOWED_ORIGINS = [
+#     'http://127.0.0.1:5500',
+# ]
+CORS_ORIGIN_WHITELIST = ['http://15.164.50.182']
+CSRF_TRUSTED_ORIGINS = CORS_ORIGIN_WHITELIST
 ROOT_URLCONF = "beesolution.urls"
 
 TEMPLATES = [
