@@ -19,9 +19,9 @@ def get_secret(setting,secrets=secrets):
     
 SECRET_KEY = get_secret("SECRET_KEY")
 
-DEBUG = os.environ.get('DEBUG','0') == '1'
+DEBUG = True
 
-ALLOWED_HOSTS = ['backend',]
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -65,11 +65,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://127.0.0.1:5500',
-# ]
-CORS_ORIGIN_WHITELIST = ['http://15.164.50.182']
-CSRF_TRUSTED_ORIGINS = CORS_ORIGIN_WHITELIST
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:5500',
+]
+
 ROOT_URLCONF = "beesolution.urls"
 
 TEMPLATES = [
@@ -90,25 +89,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "beesolution.wsgi.application"
 
-POSTGRES_DB = os.environ.get('POSTGRES_DB','')
-if POSTGRES_DB:
-    DATABASES = {
-        'default':{
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': POSTGRES_DB,
-            'USER':os.environ.get('POSTGRES_USER',''),
-            'PASSWORD':os.environ.get('POSTGRES_PASSWORD',''),
-            'HOST':os.environ.get('POSTGRES_HOST',''),
-            'PORT':os.environ.get('POSTGRES_PORT', ''),
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-else:
-    DATABASES = {
-        'default':{
-            'ENGINE':'django.db.backends.sqlite3',
-            'NAME':BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -136,8 +122,8 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_URL = "static/"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'users.User'
