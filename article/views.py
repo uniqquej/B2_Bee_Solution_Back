@@ -32,7 +32,7 @@ class MakeWorryView(APIView):
         return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        solution = Article.objects.filter(user_id = request.user.id).last()
+        solution = Article.objects.filter(user_id = request.user.id).first()
         solution_serializer = WorrySerializer(solution)
         return Response(solution_serializer.data, status=status.HTTP_200_OK)
       
