@@ -18,6 +18,8 @@ class Rating(models.Model):
     rating = models.IntegerField()
     
 class Article(models.Model):
+    class Meta:
+        ordering = ['-id']
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     category = models.CharField(max_length=10)
     solution = models.ManyToManyField(Solution, related_name='connected_article')    
@@ -25,6 +27,8 @@ class Article(models.Model):
     mbti = models.CharField(max_length=50)
     
 class Comment(models.Model):
+    class Meta:
+        ordering = ['-id']
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     article = models.ForeignKey(Article,on_delete=models.CASCADE)
     content = models.TextField()
