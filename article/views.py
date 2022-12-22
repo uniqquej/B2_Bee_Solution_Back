@@ -132,7 +132,7 @@ class MakeSolutionView(APIView):
 class SolutionDetailView(APIView):
     permissions_classes = [IsAuthenticated]
     
-    def post(self, request, article_id, solution_id):
+    def post(self, request, solution_id):
         solution_detail_serializer = RatingSerializer(data = request.data)
         if solution_detail_serializer.is_valid():
             #같은 유저가 같은 솔루션을 평가했는지 체크
@@ -145,7 +145,7 @@ class SolutionDetailView(APIView):
                 return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
         return Response(solution_detail_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, request, article_id, solution_id):
+    def delete(self, request, solution_id):
         solution = Solution.objects.get(id=solution_id)
         if request.user == solution.user:
             solution.delete()
