@@ -1,4 +1,4 @@
-from users.models import User
+from users.models import User, UserChr
 from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer, ChangePasswordSerializer
 from rest_framework.views import APIView
 from rest_framework import status
@@ -132,6 +132,15 @@ class UserChrView(APIView):
     def put(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
         check_serializer = UserChrCheckSerializer(user, data=request.data)
+        if check_serializer.is_valid():
+            check_serializer.save()
+            return Response({"message":"수정완료!"}, status=status.HTTP_200_OK)
+
+
+class UserChrChangeView(APIView):
+    def put(self, request, user_id):
+        user = get_object_or_404(UserChr, user_id=user_id)
+        check_serializer = UserChrSerializer(user, data=request.data)
         if check_serializer.is_valid():
             check_serializer.save()
             return Response({"message":"수정완료!"}, status=status.HTTP_200_OK)
