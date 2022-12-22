@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from similarity import make_solution
 from makesolution import make_wise_image
 from article.models import Solution, Article, Rating, Comment
-from article.serializers import WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer, SolutionDetailSerializer
+from article.serializers import EditWorrySerializer,WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer, SolutionDetailSerializer
 from rest_framework.pagination import PageNumberPagination 
 from article.pagination import PaginationHandlerMixin
 
@@ -165,7 +165,7 @@ class ArticleDetailView(APIView):
     
     def put(self,request,article_id):
         aritcle = Article.objects.get(id= article_id)
-        article_serializer = WorrySerializer(aritcle,data=request.data)
+        article_serializer = EditWorrySerializer(aritcle,data=request.data)
         if request.user == aritcle.user:
             if article_serializer.is_valid():
                 article_serializer.save()

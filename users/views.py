@@ -117,7 +117,7 @@ class UserChrView(APIView):
             user = request.user
             if user.user_chr_check == False:
                 return Response({"message":"유저캐릭터생성필요"}, status=status.HTTP_204_NO_CONTENT)
-            return Response({"message":"유저 캐릭터 있음"}, status=status.HTTP_200_OK)
+            return Response({"message":"유저 캐릭터 있음","mbti":user.userchr.mbti}, status=status.HTTP_200_OK)
         except:
             return Response({"message":"잘못된 접근입니다"}, status=status.HTTP_400_BAD_REQUEST)
 
