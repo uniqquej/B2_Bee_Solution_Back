@@ -11,6 +11,7 @@ urlpatterns = [
     path('signout/', views.SignoutView.as_view(), name='user_signout_view'),
     path('<int:user_id>/profile/', views.ProfileView.as_view(), name='profile_view'),
     path('<int:user_id>/profile/changepassword/', views.ChangePasswordView.as_view(), name='changepassword_view'),
+    path('<int:user_id>/profile/changembti/', views.UserChrChangeView.as_view(), name='user_chr_change_view'),
     # 토큰 발행
     path('api/token/', views.CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
