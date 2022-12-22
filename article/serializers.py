@@ -16,8 +16,8 @@ class CommentSerializer(serializers.ModelSerializer):
 class BeeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
-        fields = ['solution_image','id']
-        read_only_fields=['id',]
+        fields = ['solution_image','id','user']
+        read_only_fields=['id','user']
        
 class WorrySerializer(serializers.ModelSerializer):
     comment_set = CommentSerializer(many=True, read_only=True)
