@@ -1,5 +1,5 @@
 from users.models import User, UserChr
-from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer, ChangePasswordSerializer
+from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, UserprofileSerializer, UserChrSerializer, UserChrCheckSerializer, ChangePasswordSerializer, UserLoginSerializer
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -46,21 +46,22 @@ class UserAuthView(APIView):
     
     def post(self, request):
         try:
-            serializer = UserSerializer(data=request.data)
-            if serializer.is_valid():
-                user=User.objects.get(username=request.data['username'])
-                password=request.data.get("password")
-                # 존재하지 않는 유저일때
-                if not user:
+            serializer = UserLoginSerializer(data=request.data)
+            username = request.data.get('username')
+            password = request.data.get('password')
+            
+            if serializer.is_valid(): 
+
+                if not User.objects.filter(username = username).exists():
                     return Response({"message":f"존재하지 않는 유저입니다."}, status=status.HTTP_400_BAD_REQUEST)
+                
         
-                # 비밀번호가 틀렸을때
-                if not check_password(password, user.password):
-                    return Response({"message":f"잘못된 패스워드입니다."}, status=status.HTTP_400_BAD_REQUEST)
         except:
             return Response({"message":f"잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            user = authenticate(username=request.data.get("username"), password=request.data.get("password"))
+            user = authenticate(username=username, password=password)
+            if user is None:
+                return Response({"message":f"비밀번호를 다시 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
         
             if user.is_authenticated:
                 token = CustomTokenObtainPairSerializer.get_token(user)

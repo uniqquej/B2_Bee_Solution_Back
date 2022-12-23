@@ -30,6 +30,10 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class UserLoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username','password']      
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
