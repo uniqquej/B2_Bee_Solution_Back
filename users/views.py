@@ -158,7 +158,7 @@ class ChangePasswordView(APIView):
 
 class KakaoSignInView(APIView):
     def get(self, request):
-        client_id = '383932bc9488431b9961d6fc0b2e5cc8'
+        client_id = '6f8aa6ff4c3e59adf568493de2ac9bb1'
         redirect_uri = "http://127.0.0.1:5500/kakao.html"
         return redirect(
             f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
@@ -170,7 +170,7 @@ class KakaoSignInCallbackView(APIView):
         try:
             code = json.loads(request.body)
             code = code["code"]
-            client_id = '3e14ee98dc81007009e23c953ca452c8'
+            client_id = '6f8aa6ff4c3e59adf568493de2ac9bb1'
             redirect_uri = "http://127.0.0.1:5500/kakao.html"
 
             token_request = requests.get(
