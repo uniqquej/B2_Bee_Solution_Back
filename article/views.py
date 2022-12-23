@@ -43,19 +43,6 @@ class BeeSolutionView(APIView):
         bee_solution = Solution.objects.get(id = solution_id)
         bee_solution_serializer = BeeSolutionSerializer(bee_solution)
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
-    
-    def post(self,request,solution_id):
-        rating_serializer = RatingSerializer(data = request.data)
-        if rating_serializer.is_valid():
-            #같은 유저가 같은 솔루션을 평가했는지 체크
-            if Rating.objects.filter(user_id = request.user.id, solution_id = solution_id).exists():
-                Rating.objects.filter(user_id = request.user.id, solution_id = solution_id).delete()
-                rating_serializer.save(user = request.user, solution_id = solution_id)
-                return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
-            else:
-                rating_serializer.save(user = request.user, solution_id = solution_id)
-                return Response({"message":"평가 완료"}, status=status.HTTP_200_OK)
-        return Response(rating_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommentView(APIView,PaginationHandlerMixin):
     permissions_classes = [IsAuthenticated]
