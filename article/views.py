@@ -209,6 +209,14 @@ class AllBeeSolutionView(APIView):
         bee_solution_serializer = BeeSolutionSerializer(bee_solution, many = True)
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
 
+class MyBeeSolutionView(APIView):
+    permissions_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        bee_solution = Solution.objects.filter(user = request.user).order_by('-pk')
+        bee_solution_serializer = BeeSolutionSerializer(bee_solution, many = True)
+        return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
+
 
 class CommentLikeView(APIView):
     permissions_classes = [IsAuthenticated]
