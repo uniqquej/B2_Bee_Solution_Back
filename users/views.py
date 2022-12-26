@@ -82,7 +82,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 
 class ProfileView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def get(self, request, user_id):
         profile = get_object_or_404(User, id=user_id)
@@ -148,7 +148,7 @@ class UserChrChangeView(APIView):
 
 
 class ChangePasswordView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def put(self, request, user_id):
         user = User.objects.get(id = request.user.id)
         serializer = ChangePasswordSerializer(user, data = request.data, partial=True)
