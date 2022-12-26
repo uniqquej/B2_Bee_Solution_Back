@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django_seed",
     "users",
     "article",
+    "message",
     "corsheaders",
 ]
 
