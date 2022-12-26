@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from similarity import make_solution
 from makesolution import make_wise_image
 from article.models import Solution, Article, Rating, Comment
-from article.serializers import EditWorrySerializer,WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer, SolutionDetailSerializer
+from article.serializers import EditWorrySerializer,WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer, SolutionDetailSerializer, MyRatingSolutionSerializer
 from rest_framework.pagination import PageNumberPagination 
 from article.pagination import PaginationHandlerMixin
 
@@ -209,12 +209,13 @@ class AllBeeSolutionView(APIView):
         bee_solution_serializer = BeeSolutionSerializer(bee_solution, many = True)
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
 
+
 class MyBeeSolutionView(APIView):
     permissions_classes = [IsAuthenticated]
     
     def get(self, request):
-        bee_solution = Solution.objects.filter(user = request.user).order_by('-pk')
-        bee_solution_serializer = BeeSolutionSerializer(bee_solution, many = True)
+        bee_solution = Rating.objects.filter(user_id = request.user).order_by('-pk')
+        bee_solution_serializer = MyRatingSolutionSerializer(bee_solution, many = True)
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
 
 

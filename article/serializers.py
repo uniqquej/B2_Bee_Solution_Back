@@ -47,3 +47,10 @@ class MakeSolutionSerializer(serializers.ModelSerializer):
         model = Solution
         fields = ['user','solution_image', 'wise', 'nickname']
         read_only_fields=['user',]
+
+
+class MyRatingSolutionSerializer(serializers.ModelSerializer):
+    solution = BeeSolutionSerializer(read_only = True)
+    class Meta :
+        model = Rating
+        fields = ['rating', 'solution']
