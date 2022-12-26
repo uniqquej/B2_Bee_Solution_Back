@@ -35,7 +35,7 @@ class DetailMessageView(APIView):
             message.delete_sender = True
             message.save()
              
-        if message.delete_receiver and message.delete_sender:
+        if message.delete_receiver and message.delete_sender: #받은 사람과 보낸 사람이 모두 삭제하면 db 삭제
             if request.user == message.receiver or request.user == message.sender:
                 message.delete()
                 return Response({"message":"삭제 완료"},status=status.HTTP_204_NO_CONTENT)

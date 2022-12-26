@@ -7,6 +7,6 @@ class Message(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    delete_receiver = models.BooleanField(default=False)
-    delete_sender = models.BooleanField(default=False)
+    delete_receiver = models.BooleanField(default=False) #받은 사람 삭제 체크
+    delete_sender = models.BooleanField(default=False) #보낸 사람 삭제 체크
     
