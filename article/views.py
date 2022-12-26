@@ -16,7 +16,7 @@ class CommentPagination(PageNumberPagination):
     page_size = 5
     
 class MakeWorryView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
      
     def post(self, request):
         my_id = request.user.id
@@ -37,7 +37,7 @@ class MakeWorryView(APIView):
         return Response(solution_serializer.data, status=status.HTTP_200_OK)
       
 class BeeSolutionView(APIView):  
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def get(self,request, solution_id):
         bee_solution = Solution.objects.get(id = solution_id)
@@ -45,7 +45,7 @@ class BeeSolutionView(APIView):
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
 
 class CommentView(APIView,PaginationHandlerMixin):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     pagination_class = CommentPagination
     serializer_class = CommentSerializer 
@@ -68,7 +68,7 @@ class CommentView(APIView,PaginationHandlerMixin):
             return Response(comment_serializer.errors,status=status.HTTP_400_BAD_REQUEST)    
 
 class CommentDetailView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def put(self,request,article_id,comment_id):
         comment = Comment.objects.get(id=comment_id)
@@ -89,7 +89,7 @@ class CommentDetailView(APIView):
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
 
 class MakeSolutionView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def get(self, request, article_id):
         article=  Article.objects.get(id=article_id)
@@ -117,7 +117,7 @@ class MakeSolutionView(APIView):
             return Response("실패", status=status.HTTP_400_BAD_REQUEST)
         
 class SolutionDetailView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def post(self, request, solution_id):
         solution_detail_serializer = RatingSerializer(data = request.data)
@@ -143,7 +143,7 @@ class SolutionDetailView(APIView):
     
 
 class ArticleDetailView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def get(self,request,article_id):
         article_detail = Article.objects.get(id=article_id)
@@ -171,7 +171,7 @@ class ArticleDetailView(APIView):
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
         
 class MainView(APIView, PaginationHandlerMixin):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     pagination_class = ArticlePagination
     serializer_class = WorrySerializer
@@ -202,7 +202,7 @@ class MainView(APIView, PaginationHandlerMixin):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class AllBeeSolutionView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def get(self, request):
         bee_solution = Solution.objects.all().order_by('-pk')
@@ -211,7 +211,7 @@ class AllBeeSolutionView(APIView):
 
 
 class MyBeeSolutionView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def get(self, request):
         bee_solution = Rating.objects.filter(user_id = request.user).order_by('-pk')
@@ -220,7 +220,7 @@ class MyBeeSolutionView(APIView):
 
 
 class CommentLikeView(APIView):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def post(self, request,article_id,comment_id):
         me = request.user
         comment = Comment.objects.get(id = comment_id)
@@ -233,7 +233,7 @@ class CommentLikeView(APIView):
 
 
 class ProfileArticleView(APIView, PaginationHandlerMixin):
-    permissions_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     pagination_class = ArticlePagination
     serializer_class = WorrySerializer
