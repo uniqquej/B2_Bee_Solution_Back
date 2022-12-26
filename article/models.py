@@ -25,6 +25,7 @@ class Article(models.Model):
     solution = models.ManyToManyField(Solution, related_name='connected_article')    
     content = models.TextField()
     mbti = models.CharField(max_length=50)
+    # comment알림
     
 class Comment(models.Model):
     class Meta:

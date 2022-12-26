@@ -82,7 +82,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 
 class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     def get(self, request, user_id):
         profile = get_object_or_404(User, id=user_id)
