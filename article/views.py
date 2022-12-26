@@ -26,13 +26,13 @@ class MakeWorryView(APIView):
         worry_serializer = WorrySerializer(data=request.data)
         if worry_serializer.is_valid():
             result = make_solution(my_id, category)
-            thisarticle = worry_serializer.save(user=request.user)
+            thisarticle = worry_serializer.save(user=request.user, new_comment=0)
             thisarticle.solution.add(result)
             return Response(worry_serializer.data, status=status.HTTP_200_OK)
         return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        solution = Article.objects.filter(user_id = request.user.id).first()
+        solution = Article.objects.filter(user_id=request.user.id).first()
         solution_serializer = WorrySerializer(solution)
         return Response(solution_serializer.data, status=status.HTTP_200_OK)
       
@@ -62,7 +62,10 @@ class CommentView(APIView,PaginationHandlerMixin):
     def post(self,request,article_id):
         comment_serializer = CommentSerializer(data=request.data)
         if comment_serializer.is_valid():
-            comment_serializer.save(user = request.user, article_id = article_id)
+            this_comment = comment_serializer.save(user=request.user, article_id=article_id)
+            this_article = Article.objects.get(id=this_comment.article_id)
+            this_article.new_comment = 1
+            this_article.save()
             return Response(comment_serializer.data,status=status.HTTP_201_CREATED)
         else:
             return Response(comment_serializer.errors,status=status.HTTP_400_BAD_REQUEST)    
@@ -148,6 +151,9 @@ class ArticleDetailView(APIView):
     def get(self,request,article_id):
         article_detail = Article.objects.get(id=article_id)
         article_detail_serializer = WorrySerializer(article_detail)
+        if request.user == article_detail.user:
+            article_detail.new_comment = 0
+            article_detail.save()
         return Response(article_detail_serializer.data,status=status.HTTP_200_OK)
     
     def put(self,request,article_id):
