@@ -45,7 +45,7 @@ class BeeSolutionView(APIView):
         return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
 
 class CommentView(APIView,PaginationHandlerMixin):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     pagination_class = CommentPagination
     serializer_class = CommentSerializer 
