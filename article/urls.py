@@ -12,4 +12,5 @@ urlpatterns = [
     path('<int:article_id>/comment/<int:comment_id>/likes/',views.CommentLikeView.as_view()),
     path('solution/<int:solution_id>/', views.SolutionDetailView.as_view(), name='solution_detail'),
     path('allsolution/', views.AllBeeSolutionView.as_view(), name='all_solution'),
+    path('mysolution/', views.MyBeeSolutionView.as_view(), name='my_solution'),
 ]
