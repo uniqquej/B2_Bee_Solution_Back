@@ -14,5 +14,5 @@ urlpatterns = [
     path('solution/<int:solution_id>/', views.SolutionDetailView.as_view(), name='solution_detail'),
     path('allsolution/', views.AllBeeSolutionView.as_view(), name='all_solution'),
     path('mysolution/', views.MyBeeSolutionView.as_view(), name='my_solution'),
-    path('alarm/', views.AlarmView.as_view(), name='alarm'),
+    path('alarm/<int:check>/', views.AlarmView.as_view(), name='alarm'),
 ]

@@ -272,13 +272,23 @@ class ProfileArticleView(APIView, PaginationHandlerMixin):
         else:
             serializer = self.serializer_class(articles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
 class AlarmView(APIView):
     permission_classes = [IsAuthenticated]
     
-    def get(self, request):
-        new_comment_article = Article.objects.filter(user=request.user, new_comment=True)
-        new_comment_article_serializer = WorrySerializer(new_comment_article, many=True)
-        return Response(new_comment_article_serializer.data, status=status.HTTP_200_OK)
+    def get(self, request, check):
+        if not check:
+            new_comment_article = Article.objects.filter(user=request.user, new_comment=True)
+            new_comment_article_serializer = WorrySerializer(new_comment_article, many=True)
+            return Response(new_comment_article_serializer.data, status=status.HTTP_200_OK)
+        else:
+            if Article.objects.filter(user=request.user, new_comment=True).exists():
+                result = {'check': True}
+                return Response(status=status.HTTP_200_OK)
+            else:
+                result = {'check': False}
+                return Response(status=status.HTTP_204_NO_CONTENT)
 
 class MakeWorryPromotionView(APIView):
     def post(self, request):
