@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from similarity import make_solution
 from makesolution import make_wise_image
@@ -8,6 +9,7 @@ from article.models import Solution, Article, Rating, Comment
 from article.serializers import EditWorrySerializer,WorrySerializer,BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer, SolutionDetailSerializer, MyRatingSolutionSerializer
 from rest_framework.pagination import PageNumberPagination 
 from article.pagination import PaginationHandlerMixin
+from users.models import User, UserChr
 
 class ArticlePagination(PageNumberPagination):
     page_size = 3
@@ -17,7 +19,7 @@ class CommentPagination(PageNumberPagination):
     
 class MakeWorryView(APIView):
     permission_classes = [IsAuthenticated]
-     
+
     def post(self, request):
         my_id = request.user.id
         category_list = ['일상','취미','취업','음식']
@@ -270,8 +272,6 @@ class ProfileArticleView(APIView, PaginationHandlerMixin):
         else:
             serializer = self.serializer_class(articles, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    
 class AlarmView(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -279,3 +279,17 @@ class AlarmView(APIView):
         new_comment_article = Article.objects.filter(user=request.user, new_comment=True)
         new_comment_article_serializer = WorrySerializer(new_comment_article, many=True)
         return Response(new_comment_article_serializer.data, status=status.HTTP_200_OK)
+
+class MakeWorryPromotionView(APIView):
+    def post(self, request):
+        # 내가 선택한 MBTI 와 같은 MBTI 를 지니고 있는 유저 중 첫번째 유저 선택
+        promotion_mbti = request.data['mbti']
+        my_id = UserChr.objects.filter(mbti=promotion_mbti).first().user_id
+        if my_id is None:
+            my_id = 115
+        category_list = ['일상','취미','취업','음식']
+        category = category_list.index(request.data['category'])+1
+        result = make_solution(my_id, category)
+        data = Solution.objects.filter(id = result).values()
+        
+        return Response({'data': data}, status=status.HTTP_200_OK)
