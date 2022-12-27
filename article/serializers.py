@@ -1,6 +1,19 @@
 from rest_framework import serializers
 from article.models import Article,Comment,Solution
 from article.models import Article, Solution, Rating
+from users.models import User,UserChr
+
+class commentUserchrSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserChr
+        fields = ['user','mbti','age','gender']
+
+class commentUserSerializer(serializers.ModelSerializer):
+    userchr = commentUserchrSerializer(required=True)
+    
+    class Meta:
+        model = User
+        fields = ['userchr',]
 
 class CommentSerializer(serializers.ModelSerializer):
     like_count = serializers.SerializerMethodField(read_only=True)
@@ -8,11 +21,24 @@ class CommentSerializer(serializers.ModelSerializer):
     def get_like_count(self, obj):
         return obj.likes.count()
     
+    
+    user = commentUserSerializer()
     class Meta:
         model = Comment
         fields = ['content','id','user','likes','like_count']
         read_only_fields=['id','user','likes',]       
-             
+
+class CommentcreateSerializer(serializers.ModelSerializer):
+    like_count = serializers.SerializerMethodField(read_only=True)
+    
+    def get_like_count(self, obj):
+        return obj.likes.count()
+        
+    class Meta:
+        model = Comment
+        fields = ['content','id','user','likes','like_count']
+        read_only_fields=['id','user','likes',]  
+
 class BeeSolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solution
@@ -54,3 +80,4 @@ class MyRatingSolutionSerializer(serializers.ModelSerializer):
     class Meta :
         model = Rating
         fields = ['rating', 'solution']
+        
