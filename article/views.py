@@ -26,10 +26,11 @@ class MakeWorryView(APIView):
         worry_serializer = WorrySerializer(data=request.data)
         if worry_serializer.is_valid():
             result = make_solution(my_id, category)
-            thisarticle = worry_serializer.save(user=request.user, new_comment=0)
-            thisarticle.solution.add(result)
+            this_article = worry_serializer.save(user=request.user, new_comment=0)
+            this_article.solution.add(result)
             return Response(worry_serializer.data, status=status.HTTP_200_OK)
-        return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         solution = Article.objects.filter(user_id=request.user.id).first()
@@ -92,7 +93,7 @@ class CommentDetailView(APIView):
             return Response({"message":"권한이 없습니다."},status=status.HTTP_403_FORBIDDEN)
 
 class MakeSolutionView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     def get(self, request, article_id):
         article=  Article.objects.get(id=article_id)
@@ -102,9 +103,9 @@ class MakeSolutionView(APIView):
     def post(self, request, article_id):
         make_solution_serializer = MakeSolutionSerializer(data=request.data)
         if make_solution_serializer.is_valid():
-            thissolution = make_solution_serializer.save(user=request.user)
-            make_wise_image(thissolution.pk)
-            start_rating = Rating(user_id=request.user.id, solution_id =thissolution.pk, rating=4)
+            this_solution = make_solution_serializer.save(user=request.user)
+            make_wise_image(this_solution.pk)
+            start_rating = Rating(user_id=request.user.id, solution_id=this_solution.pk, rating=4)
             start_rating.save()
 
             request_category = request.data['category']
@@ -113,7 +114,7 @@ class MakeSolutionView(APIView):
             
             if article_id:
                 article = Article.objects.get(id=article_id)
-                article.solution.add(thissolution.pk)
+                article.solution.add(this_solution.pk)
             
             return Response("저장 완료", status=status.HTTP_200_OK)
         else:
