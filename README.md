@@ -177,7 +177,7 @@ Frontend
 ![트러블_인덱스에러_1](https://user-images.githubusercontent.com/55372753/207770259-a0690844-82d1-4ae5-91e5-f7e85ad216e0.png)
 ![트러블_인덱스에러_2](https://user-images.githubusercontent.com/55372753/207770268-b009f0c5-88b4-44bd-8d25-a3303c24148f.png)
 ![트러블_소셜로그인](https://user-images.githubusercontent.com/55372753/207770283-5218086c-71c2-47be-8367-045e7dee98d3.png)
-
+![트러블_도커 에러](https://user-images.githubusercontent.com/113076205/209823788-e97f2c68-b523-4ba3-934b-d12893edb549.png)
 
 # 4. 기타 
  ## 🐥 Front-end repo
