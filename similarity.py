@@ -12,9 +12,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def make_solution(my_id, category):
-    # 새로 회원가입 한 유저의 경우 1번 솔루션에 2점 주고 시작 > rating모델에 회원가입한 유저 id반영
+    # 새로 회원가입 한 유저의 경우 65번 솔루션에 2점 주고 시작 > rating모델에 회원가입한 유저 id반영
     if not Rating.objects.filter(user_id = my_id).exists():
-        test_rating = Rating(user_id = my_id, solution_id = 1, rating=2)
+        test_rating = Rating(user_id = my_id, solution_id = 65, rating=2)
         test_rating.save()
         
     ratings = Rating.objects.all().values()
