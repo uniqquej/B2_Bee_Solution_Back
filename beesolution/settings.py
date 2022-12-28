@@ -3,6 +3,7 @@ import json
 import os
 from django.core.exceptions import ImproperlyConfigured
 from datetime import timedelta
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 secret_file = os.path.join(BASE_DIR,'secrets.json')
@@ -10,7 +11,7 @@ secret_file = os.path.join(BASE_DIR,'secrets.json')
 with open(secret_file) as f:
     secrets = json.loads(f.read())
     
-def get_secret(setting,secrets=secrets):
+def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
@@ -44,7 +45,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-
     'SECURITY_DEFINITIONS': {
             'api_key': {
                 'type': 'apiKey',
@@ -52,7 +52,6 @@ REST_FRAMEWORK = {
                 'name': 'Authorization'
             }
         }
-
 }
 
 MIDDLEWARE = [
@@ -121,6 +120,7 @@ USE_I18N = True
 USE_TZ = True
 
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = "static/"
@@ -129,8 +129,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'users.User'
 
-SIMPLE_JWT = {  # jwt customizing / token lifetime
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=300), # 개발 시 로그인 활성시간 늘려주었다가 수정 후 배포하기
+SIMPLE_JWT = {  
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), 
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
