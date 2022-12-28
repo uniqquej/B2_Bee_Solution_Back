@@ -133,9 +133,9 @@ Frontend
 └── solution_detail.html
 
 ```
-
 </div>
 </details>
+
 ## 사용 기술 
 - 여기에는 사용기술이 들어갑니다
 
