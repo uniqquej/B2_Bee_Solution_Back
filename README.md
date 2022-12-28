@@ -1,24 +1,44 @@
 ## Super Bees - AI Bee-Soultion 프로젝트
 
-# **프로젝트 개요**
- - 사용자들이 일상과 고민들을 공유하고 소소한 힐링과 동기부여를 얻어 갈 수 있는 웹 서비스
+# 1. 프로젝트 개요
+ ## 프로젝트 소개
+ - 일상과 고민들을 공유하고 솔루션을 얻을 수 있는 웹 서비스 'Beesolution' 개발
 
-  - 익명의 사용자가 고민을 올리면 꿀벌들이 협동하듯 사용자들이 솔루션을 주고 인공지능 Superbee가 최적의 솔루션을 제시 해주는 웹 서비스 개발
+## 프로젝트 노션
+- [비솔루션 소개 노션](https://www.notion.so/Super-Bees-AI-3-AI-Bee-solution-S-A-14f050d1286243889061802f2e7510d2)
 
-## 목표
- - 프로젝트 기한(2022.12.01 ~ 2022.12.29)내에 프로젝트 완성 및 서비스 배포를 목표
+## 기간
+ - 2022.12.01 ~ 2022.12.29 (5주)
 
 ## 팀명 및 팀원
- * 팀명 : Super Bees - B2조 Bees 는 back-end engineers의 약자로도 표현할 수 있음
-
+ * 팀명 : Super Bees (Bees : Back-end engineers)
  * 팀장 : [김병문](https://github.com/kbm1933)
  * 팀원 : [김동익](https://github.com/DongIkkk), [오형석](https://github.com/auberr), [이혜원](https://github.com/wonprogrammer), [최정윤](https://github.com/uniqquej)
  
- ## Front-end repo
-- [깃헙으로 이동](https://github.com/kbm1933/B2_Bee_Solution_Front)
+# 2. 서비스
+ ## 서비스 소개
+- 익명의 사용자가 고민을 올리면 꿀벌들이 협동하듯 사용자들이 솔루션을 주고 인공지능 Superbee가 최적의 솔루션을 제시 해주는 웹 서비스
+- 최적의 솔루션은 분석을 통해 상황에 맞는 재미있는 짤과 함께 제공됩니다.
+- 솔루션을 바탕으로 사용자들과 소통할 수 있는 커뮤니티 서비스가 있습니다.
 
-## Project Intro Notion
-- [노션으로 이동](https://www.notion.so/Super-Bees-AI-3-AI-Bee-solution-S-A-14f050d1286243889061802f2e7510d2)
+### - [비솔루션 써보기](https://beesolution.tk)
+
+## 페이지 소개
+- 여기에는 페이지 소개가 들어갑니다(움짤)
+
+# 3. 기술
+## 기능 소개
+- 여기에는 기능 소개가 들어갑니다
+
+## Structure
+- 여기에는 스트럭쳐 소개가 들어갑니다
+
+## 사용 기술 
+- 여기에는 사용기술이 들어갑니다
+
+## 아키텍쳐
+- 여기에는 아키텍쳐가 들어갑니다
+
 
  ## ERD
  ![image](https://user-images.githubusercontent.com/109218139/207600367-5ddef6ea-a27c-4dcf-beb7-5ff686d59c97.png)
@@ -37,3 +57,11 @@
 ![트러블_인덱스에러_1](https://user-images.githubusercontent.com/55372753/207770259-a0690844-82d1-4ae5-91e5-f7e85ad216e0.png)
 ![트러블_인덱스에러_2](https://user-images.githubusercontent.com/55372753/207770268-b009f0c5-88b4-44bd-8d25-a3303c24148f.png)
 ![트러블_소셜로그인](https://user-images.githubusercontent.com/55372753/207770283-5218086c-71c2-47be-8367-045e7dee98d3.png)
+
+
+# 4. 기타 
+ ## Front-end repo
+- [깃헙으로 이동](https://github.com/kbm1933/B2_Bee_Solution_Front)
+
+ ## Back-end repo
+- [깃헙으로 이동](https://github.com/kbm1933/B2_Bee_Solution_Back)
