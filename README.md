@@ -29,19 +29,19 @@
 ## 📰페이지 소개
 | 회원가입 & 로그인 | 고민 작성 & 솔루션 추천  |
 |:----------:|:----------:|
-| <img src = "https://user-images.githubusercontent.com/6766202/209770786-d85266ff-be7f-4d33-90fc-4bf11396ffe8.gif" /> | <img src = "https://user-images.githubusercontent.com/110454344/209767124-8df558d0-ba85-40f1-9993-33be1b535be0.gif" /> |
+| <img src = "https://user-images.githubusercontent.com/6766202/209770786-d85266ff-be7f-4d33-90fc-4bf11396ffe8.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803334-035a0a1b-3984-4e01-90e5-683e3d14c949.png" />  | <img src = "https://user-images.githubusercontent.com/110454344/209767124-8df558d0-ba85-40f1-9993-33be1b535be0.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803450-836dc8cd-472e-43c7-a22f-d172062acdb8.png" />  |
 
 | 솔루션 생성 & 평가 & 삭제  | 게시글 디테일 & 수정 & 추천 솔루션 |
 |:----------:|:----------:|
-| <img src = "https://user-images.githubusercontent.com/110454344/209767453-8730fafc-8f2b-4a22-9d7b-5806ec9bc212.gif" /> | <img src = "https://user-images.githubusercontent.com/6766202/209770864-3a44bab5-22f6-4ce0-9675-7bbb9995a7d1.gif" /> |
+| <img src = "https://user-images.githubusercontent.com/110454344/209767453-8730fafc-8f2b-4a22-9d7b-5806ec9bc212.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803508-1b944278-225a-4895-83f0-5cd9d95d7017.png" />  | <img src = "https://user-images.githubusercontent.com/6766202/209770864-3a44bab5-22f6-4ce0-9675-7bbb9995a7d1.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803562-9b4630dc-fd3c-41ec-ae6c-64e16661c813.png" />  |
 
 | 댓글 작성 & 수정 & 삭제 | 프로필 기능들 |
 |:----------:|:----------:|
-| <img src = "https://user-images.githubusercontent.com/6766202/209770895-ed3aeb35-7272-4836-a922-97144cab34a4.gif" /> | <img src = "https://user-images.githubusercontent.com/113076205/209771362-f9e3d0d5-a326-41d6-a239-846bccc027ad.gif" /> |
+| <img src = "https://user-images.githubusercontent.com/6766202/209770895-ed3aeb35-7272-4836-a922-97144cab34a4.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803604-8e7097ba-6c30-4d11-9566-e6c4705be8c7.png" />  | <img src = "https://user-images.githubusercontent.com/113076205/209771362-f9e3d0d5-a326-41d6-a239-846bccc027ad.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803640-85586fbb-ecc9-4363-9951-331b84a6f40b.png" />  |
 
 | 쪽지 기능 | 댓글 알림 기능 |
 |:----------:|:----------:|
-| <img src = "https://user-images.githubusercontent.com/113076205/209771433-af8c41c2-a7e9-488c-b49d-85655954a263.gif" /> | <img src = "https://user-images.githubusercontent.com/110454344/209767461-a6e425f3-c209-4ca1-94bf-8f9c887d1b3a.gif" /> |
+| <img src = "https://user-images.githubusercontent.com/113076205/209771433-af8c41c2-a7e9-488c-b49d-85655954a263.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803695-ad701e55-bf70-4d8f-afb7-23fc98099f98.png" />  | <img src = "https://user-images.githubusercontent.com/110454344/209767461-a6e425f3-c209-4ca1-94bf-8f9c887d1b3a.gif" /> <img src = "https://user-images.githubusercontent.com/110454344/209803702-7c149ba3-1529-4b63-80ca-ba24af20ff51.png" />  |
 
 # 3. 기술
 
