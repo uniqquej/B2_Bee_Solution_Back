@@ -32,8 +32,110 @@
 # 3. 기술
 
 ## Structure
-- 여기에는 스트럭쳐 소개가 들어갑니다
+<details>
+<summary>프로젝트 구성</summary>
+<div markdown="1">
 
+<br>
+
+```markup
+Backend
+├── article
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── pagination.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── viewss.py
+├── beesolution
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └──  wsgi.py
+├── fonts
+│   └── NotoSerifKR-Bold.otf
+├── users
+│   ├── management
+│   │   ├── commands
+│   │   │   ├── init.py
+│   │   │   └── seed_users.py
+│   │   └── init.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── viewss.py
+│   load_csv.py
+│   ratings.csv
+│   solutions.csv
+│   makesolution.py
+│   manage.py
+│   similarity.py
+└── requirements.txt
+
+Frontend
+├── css
+│   ├── alarm.css
+│   ├── article_detail.css
+│   ├── articles.css
+│   ├── create_solution.css
+│   ├── index.css
+│   ├── kakao.css
+│   ├── main.css
+│   ├── message.css
+│   ├── profile.css
+│   ├── profile_detail.css
+│   ├── promotion.css
+│   ├── signup_userchr.css
+│   ├── solution.css
+│   ├── solution_collection.css
+│   └──  solution_detail.css
+├── imgs
+│   ├── bee_logo.jpg
+│   ├── beealarmoff.png
+│   ├── beealarmon.png
+│   ├── delete.png
+│   └── sadbee.jpg
+├── js
+│   ├── alarm.js
+│   ├── article_detail.js
+│   ├── articles.js
+│   ├── create_solution.js
+│   ├── index.js
+│   ├── kakao.js
+│   ├── main.js
+│   ├── message.js
+│   ├── profile.js
+│   ├── profile_detail.js
+│   ├── promotion.js
+│   ├── signup_userchr.js
+│   ├── solution.js
+│   ├── solution_collection.js
+│   └── solution_detail.js
+├── alarm.html
+├── article_detail.html
+├── articles.html
+├── create_solution.html
+├── index.html
+├── kakao.html
+├── main.html
+├── message.html
+├── profile.html
+├── profile_detail.html
+├── promotion.html
+├── signup_userchr.html
+├── solution.html
+├── solution_collection.html
+└── solution_detail.html
+
+```
+
+</div>
+</details>
 ## 사용 기술 
 - 여기에는 사용기술이 들어갑니다
 
