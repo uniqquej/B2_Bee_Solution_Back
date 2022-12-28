@@ -13,8 +13,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def make_solution(my_id, category):
     # 새로 회원가입 한 유저의 경우 65번 솔루션에 2점 주고 시작 > rating모델에 회원가입한 유저 id반영
-    if not Rating.objects.filter(user_id = my_id).exists():
-        test_rating = Rating(user_id = my_id, solution_id = 65, rating=2)
+    if not Rating.objects.filter(user_id=my_id).exists():
+        test_rating = Rating(user_id=my_id, solution_id=65, rating=2)
         test_rating.save()
         
     ratings = Rating.objects.all().values()
@@ -34,8 +34,7 @@ def make_solution(my_id, category):
 
     # 위는 그냥 numpy 행렬이니까, 이를 데이터프레임으로 변환
     user_based_collab = pd.DataFrame(user_based_collab, index=solution_user.index, columns=solution_user.index)
-    print('********데이터프레임***********')
-    print(user_based_collab.head)
+    
     #로그인 유저와 유사도가 높은 유저 1명 뽑기
     user = user_based_collab[my_id].sort_values(ascending=False).index[1]
 
@@ -49,20 +48,21 @@ def make_solution(my_id, category):
     this_category = Category.objects.get(pk=category)
     cate_list = this_category.connected_solution.all().values('id')
     possible_sol = []
+    
     for i in cate_list:
         possible_sol.append(i['id'])
 
     for i in range(len(result.values[0])):
         sol_id = list(result.columns)[i]
         if sol_id in possible_sol:
-            if result.values[0][i]==4:
+            if result.values[0][i] == 4:
                 solution_score4.append(list(result.columns)[i])
-            elif result.values[0][i]==2:
+            elif result.values[0][i] == 2:
                 solution_score2.append(list(result.columns)[i])
             else:
                 solution_score0.append(list(result.columns)[i])
         
-    select_score = random.choices([0,2,4], weights = [0.1, 0.2, 0.7])
+    select_score = random.choices([0, 2, 4], weights=[0.1, 0.2, 0.7])
 
     choice_list = []
     
