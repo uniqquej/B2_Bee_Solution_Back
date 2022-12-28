@@ -79,7 +79,7 @@ class CommentDetailView(APIView):
     def put(self,request,article_id,comment_id):
         comment = Comment.objects.get(id=comment_id)
         if request.user == comment.user:
-            comment_serializer = CommentSerializer(comment,data=request.data)
+            comment_serializer = CommentcreateSerializer(comment,data=request.data)
             if comment_serializer.is_valid():
                 comment_serializer.save()
                 return Response(comment_serializer.data,status=status.HTTP_200_OK)
