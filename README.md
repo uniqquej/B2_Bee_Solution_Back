@@ -1,4 +1,6 @@
-# 🔥 Super Bees - AI Bee-Soultion 프로젝트 🔥
+<p align="center"> 
+  <img src="https://user-images.githubusercontent.com/113076205/209822642-722c559c-4901-44ce-ae61-21adcbf25224.png">
+ </p>
 
 # 1. 프로젝트 개요
  ## 🗣️ 프로젝트 소개
