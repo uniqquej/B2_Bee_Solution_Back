@@ -16,7 +16,8 @@
  * 팀원 : [김동익](https://github.com/DongIkkk), [오형석](https://github.com/auberr), [이혜원](https://github.com/wonprogrammer), [최정윤](https://github.com/uniqquej)
  
 # 2. 서비스
- ## 서비스 소개
+ ## 서비스 소개 - [www.beesolution.tk](https://beesolution.tk)
+- [www.beesolution.tk](https://beesolution.tk)
 - 익명의 사용자가 고민을 올리면 꿀벌들이 협동하듯 사용자들이 솔루션을 주고 인공지능 Superbee가 최적의 솔루션을 제시 해주는 웹 서비스
 - 최적의 솔루션은 분석을 통해 상황에 맞는 재미있는 짤과 함께 제공됩니다.
 - 솔루션을 바탕으로 사용자들과 소통할 수 있는 커뮤니티 서비스가 있습니다.
