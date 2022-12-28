@@ -14,6 +14,7 @@ import json
 import string
 import random
 
+
 class UserCreateView(APIView):
     def post(self, request): 
         serializer = UserSerializer(data=request.data)
@@ -24,9 +25,9 @@ class UserCreateView(APIView):
         else:
             return Response({"message":f"${serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserAuthView(APIView):
     def get(self, request):
-        # token 있는데 signin.html 접속할 때
         try:
             access_token = request.headers['Authorization']
             if request.headers['Authorization'] is not None:
@@ -37,10 +38,9 @@ class UserAuthView(APIView):
                 if access_token:
                     return Response(
                         {
-                            "refresh" : refresh_token,
-                            "access": access_token
+                            "refresh":refresh_token,
+                            "access":access_token
                         }, status=status.HTTP_200_OK)
-            
         except:
             return Response({"message": "KEY_ERROR"}, status=400)
     
@@ -52,10 +52,9 @@ class UserAuthView(APIView):
             
             if serializer.is_valid(): 
 
-                if not User.objects.filter(username = username).exists():
+                if not User.objects.filter(username=username).exists():
                     return Response({"message":f"존재하지 않는 유저입니다."}, status=status.HTTP_400_BAD_REQUEST)
-                
-        
+
         except:
             return Response({"message":f"잘못된 접근입니다."}, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -67,23 +66,21 @@ class UserAuthView(APIView):
                 token = CustomTokenObtainPairSerializer.get_token(user)
                 refresh_token = str(token)
                 access_token = str(token.access_token)
-                return Response({"refresh" : refresh_token, "access": access_token}, status=status.HTTP_200_OK)
-        
+                return Response({"refresh":refresh_token, "access":access_token}, status=status.HTTP_200_OK)
+
+
 class SignoutView(APIView) :
-    def post(self,request):
+    def post(self, request):
         response = Response()
         response.delete_cookie('jwt')
-        return Response({"message": "로그아웃완료!"}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message":"로그아웃완료!"}, status=status.HTTP_204_NO_CONTENT)
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
-
-class ProfileView(APIView):
-    # permission_classes = [IsAuthenticated]
-    
+class ProfileView(APIView):  
     def get(self, request, user_id):
         profile = get_object_or_404(User, id=user_id)
         serializer = UserprofileSerializer(profile)
@@ -107,12 +104,7 @@ class ProfileView(APIView):
             return Response({"message":"탈퇴실패!"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class UserChrView(APIView):
-    '''
-    유저 캐릭터 생성
-    '''
-    # 유저 캐릭터 생성 체크
     def get(self, request, user_id):
         try:
             user = request.user
@@ -157,6 +149,7 @@ class ChangePasswordView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class KakaoSignInView(APIView):
     def get(self, request):
         client_id = '6f8aa6ff4c3e59adf568493de2ac9bb1'
@@ -165,32 +158,29 @@ class KakaoSignInView(APIView):
             f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
         )
 
+
 class KakaoSignInCallbackView(APIView):
     def post(self, request):
-
         try:
             code = json.loads(request.body)
             code = code["code"]
             client_id = '6f8aa6ff4c3e59adf568493de2ac9bb1'
             redirect_uri = "http://127.0.0.1:5500/kakao.html"
-
             token_request = requests.get(
                 f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}"
             )
-
             token_json = token_request.json()
-            error = token_json.get("error",None)
+            error = token_json.get("error", None)
 
             if error is not None :
-                return Response({"message": "INVALID_CODE"}, status = 400)
-
+                return Response({"message":"INVALID_CODE"}, status=400)
             access_token = token_json['access_token']
 
         except KeyError:
-            return Response({"message" : "INVALID_TOKEN"}, status = 400)
+            return Response({"message":"INVALID_TOKEN"}, status=400)
 
         except access_token.DoesNotExist:
-            return Response({"message" : "INVALID_TOKEN"}, status = 400)
+            return Response({"message":"INVALID_TOKEN"}, status=400)
 
         profile_request = requests.get(
             "https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"},
@@ -210,8 +200,6 @@ class KakaoSignInCallbackView(APIView):
                     "access": access_token
                 }, status=status.HTTP_200_OK)
             return response
-
-
         else:
             new_pw_len = 10
             pw_candidate = string.ascii_letters + string.digits + string.punctuation 

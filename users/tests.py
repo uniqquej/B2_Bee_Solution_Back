@@ -3,7 +3,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from users.models import User
 
-# 회원 가입 테스트
+
 class UserRegistrationAPIViewTestCase(APITestCase):
     def test_registration(self):
         url = reverse("user_create_view")
@@ -15,7 +15,7 @@ class UserRegistrationAPIViewTestCase(APITestCase):
         response = self.client.post(url, user_data)
         self.assertEqual(response.status_code, 201)
 
-# 로그인 테스트
+
 class LoginUserTest(APITestCase):
     def setUp(self):
         self.data = {'username': 'testuser', 'password':'password1!'}
@@ -31,6 +31,3 @@ class LoginUserTest(APITestCase):
         response = self.client.get(path=reverse("user_auth_view"), HTTP_AUTHORIZATION=f"Bearer {access_token}")
         print(response.data)
         self.assertEqual(response.status_code, 200)
-        
-
-# 

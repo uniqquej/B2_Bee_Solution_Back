@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
+
 class UserManager(BaseUserManager):
     def create_user(self, username, password=None):
         if not username:
@@ -24,6 +25,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser):
     username = models.CharField(max_length=50, blank=False, null=True, unique=True)
     profile_img = models.ImageField(default='profile_image/profile_default.jpg', upload_to='profile_image')
@@ -39,18 +41,15 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.username
 
-
-    # custom 유저모델을 기본 유저모델로 사용하기 위한 필수코드
-    def has_perm(self, perm, obj=None): # 권한이 있는지
+    def has_perm(self, perm, obj=None):
         return True
 
-    def has_module_perms(self, app_label):  # App의 모델에 접근가능 하도록 
+    def has_module_perms(self, app_label):
         return True
 
     @property
-    def is_staff(self): # 관리자 화면에 접근하도록
+    def is_staff(self):
         return self.is_admin
-
 
 class UserChr(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
