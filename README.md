@@ -29,15 +29,15 @@
 ## 📰페이지 소개
 | 회원가입 & 로그인 | 고민 작성 & 솔루션 추천  |
 |:----------:|:----------:|
-| <img src = "" /> | <img src = "https://user-images.githubusercontent.com/110454344/209767124-8df558d0-ba85-40f1-9993-33be1b535be0.gif" /> |
+| <img src = "https://user-images.githubusercontent.com/6766202/209770786-d85266ff-be7f-4d33-90fc-4bf11396ffe8.gif" /> | <img src = "https://user-images.githubusercontent.com/110454344/209767124-8df558d0-ba85-40f1-9993-33be1b535be0.gif" /> |
 
 | 솔루션 생성 & 평가 & 삭제  | 게시글 디테일 & 수정 & 추천 솔루션 |
 |:----------:|:----------:|
-| <img src = "https://user-images.githubusercontent.com/110454344/209767453-8730fafc-8f2b-4a22-9d7b-5806ec9bc212.gif" /> | <img src = "" /> |
+| <img src = "https://user-images.githubusercontent.com/110454344/209767453-8730fafc-8f2b-4a22-9d7b-5806ec9bc212.gif" /> | <img src = "https://user-images.githubusercontent.com/6766202/209770864-3a44bab5-22f6-4ce0-9675-7bbb9995a7d1.gif" /> |
 
 | 댓글 작성 & 수정 & 삭제 | 프로필 기능들 |
 |:----------:|:----------:|
-| <img src = "" /> | <img src = "" /> |
+| <img src = "https://user-images.githubusercontent.com/6766202/209770895-ed3aeb35-7272-4836-a922-97144cab34a4.gif" /> | <img src = "" /> |
 
 | 쪽지 기능 | 댓글 알림 기능 |
 |:----------:|:----------:|
