@@ -24,11 +24,10 @@
  ![image](https://user-images.githubusercontent.com/109218139/207600367-5ddef6ea-a27c-4dcf-beb7-5ff686d59c97.png)
 
 ## API
-![image](https://user-images.githubusercontent.com/109218139/207600677-2cf3845c-b31e-43dc-af81-17cdb828f1c3.png)
-![image](https://user-images.githubusercontent.com/109218139/207600744-dd0c1e74-a5f9-4d54-8c18-ec1489f68738.png)
-![image](https://user-images.githubusercontent.com/109218139/207601278-5466b8ca-85cc-41d2-9727-7e71ae302645.png)
-![image](https://user-images.githubusercontent.com/109218139/207601466-f7df91ff-a197-472c-bf3d-f42d95591bc5.png)
-![image](https://user-images.githubusercontent.com/109218139/207601576-f143a4a1-d361-483a-a652-1257c1f80b59.png)
+![api1](https://user-images.githubusercontent.com/110454344/209745638-e2883189-506b-4b88-a727-f89aac9c1856.jpg)
+![api2](https://user-images.githubusercontent.com/110454344/209745689-34b6b290-6a41-4068-b457-305da0fc22d0.jpg)
+![api3](https://user-images.githubusercontent.com/110454344/209745695-2950ea01-b58c-4884-bdd9-cce100495676.jpg)
+![api4](https://user-images.githubusercontent.com/110454344/209745697-ccf4dd3c-1ad4-4bb0-8c39-3f8af1e57025.jpg)
 
 ## 트러블슈팅
 ![트러블_페이지네이션](https://user-images.githubusercontent.com/55372753/207770225-b45f451e-d4e5-4683-9a32-f986f7c37ea5.png)
