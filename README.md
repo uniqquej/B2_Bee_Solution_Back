@@ -25,9 +25,10 @@
 
 ## API
 ![api1](https://user-images.githubusercontent.com/110454344/209745638-e2883189-506b-4b88-a727-f89aac9c1856.jpg)
-![api2](https://user-images.githubusercontent.com/110454344/209745689-34b6b290-6a41-4068-b457-305da0fc22d0.jpg)
+![api2](https://user-images.githubusercontent.com/110454344/209746719-1f939ad7-f55f-4e33-ada9-6ff7448a267c.jpg)
 ![api3](https://user-images.githubusercontent.com/110454344/209745695-2950ea01-b58c-4884-bdd9-cce100495676.jpg)
 ![api4](https://user-images.githubusercontent.com/110454344/209745697-ccf4dd3c-1ad4-4bb0-8c39-3f8af1e57025.jpg)
+![api5](https://user-images.githubusercontent.com/110454344/209746724-f8745f13-e023-40ed-897e-c214a73eb3db.jpg)
 
 ## 트러블슈팅
 ![트러블_페이지네이션](https://user-images.githubusercontent.com/55372753/207770225-b45f451e-d4e5-4683-9a32-f986f7c37ea5.png)
