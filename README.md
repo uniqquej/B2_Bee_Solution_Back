@@ -160,7 +160,7 @@ Frontend
 
 
  ## ERD
- ![image](https://user-images.githubusercontent.com/109218139/207600367-5ddef6ea-a27c-4dcf-beb7-5ff686d59c97.png)
+ ![erd](https://user-images.githubusercontent.com/110454344/209818607-cbb277d7-5b96-4531-a267-b138c955b1b8.png)
 
 ## API
 ![api1](https://user-images.githubusercontent.com/110454344/209745638-e2883189-506b-4b88-a727-f89aac9c1856.jpg)
