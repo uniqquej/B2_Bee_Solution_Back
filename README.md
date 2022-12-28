@@ -37,11 +37,11 @@
 
 | 댓글 작성 & 수정 & 삭제 | 프로필 기능들 |
 |:----------:|:----------:|
-| <img src = "https://user-images.githubusercontent.com/6766202/209770895-ed3aeb35-7272-4836-a922-97144cab34a4.gif" /> | <img src = "" /> |
+| <img src = "https://user-images.githubusercontent.com/6766202/209770895-ed3aeb35-7272-4836-a922-97144cab34a4.gif" /> | <img src = "https://user-images.githubusercontent.com/113076205/209771362-f9e3d0d5-a326-41d6-a239-846bccc027ad.gif" /> |
 
 | 쪽지 기능 | 댓글 알림 기능 |
 |:----------:|:----------:|
-| <img src = "" /> | <img src = "https://user-images.githubusercontent.com/110454344/209767461-a6e425f3-c209-4ca1-94bf-8f9c887d1b3a.gif" /> |
+| <img src = "https://user-images.githubusercontent.com/113076205/209771433-af8c41c2-a7e9-488c-b49d-85655954a263.gif" /> | <img src = "https://user-images.githubusercontent.com/110454344/209767461-a6e425f3-c209-4ca1-94bf-8f9c887d1b3a.gif" /> |
 
 # 3. 기술
 
