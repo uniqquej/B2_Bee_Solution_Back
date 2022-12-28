@@ -37,7 +37,7 @@
 - 여기에는 사용기술이 들어갑니다
 
 ## 아키텍쳐
-- 여기에는 아키텍쳐가 들어갑니다
+![Architecture](https://user-images.githubusercontent.com/110454344/209760652-a7cb73b2-6c98-44e6-975e-3f69172f0776.png)
 
 
  ## ERD
