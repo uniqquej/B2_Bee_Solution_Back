@@ -285,14 +285,15 @@ class AlarmView(APIView):
 class MakeWorryPromotionView(APIView):
     def post(self, request):
         promotion_mbti = request.data['mbti']
-        my_id = UserChr.objects.filter(mbti=promotion_mbti).first().user_id
-        
-        if my_id is None:
+        userchr_check = UserChr.objects.filter(mbti=promotion_mbti)
+        if userchr_check:
+            my_id = userchr_check.first().user_id
+        else:
             my_id = 115
             
-        category_list = ['일상', '취미', '취업', '음식']
-        category = category_list.index(request.data['category']) + 1
+        category_list = ['일상','취미','취업','음식']
+        category = category_list.index(request.data['category'])+1
         result = make_solution(my_id, category)
-        data = Solution.objects.filter(id=result).values()
+        data = Solution.objects.filter(id = result).values()
         
-        return Response({'data':data}, status=status.HTTP_200_OK)
+        return Response({'data': data}, status=status.HTTP_200_OK)
