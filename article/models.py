@@ -28,8 +28,7 @@ class Article(models.Model):
     solution = models.ManyToManyField(Solution, related_name='connected_article')    
     content = models.TextField()
     mbti = models.CharField(max_length=50)
-    new_comment = models.BooleanField()
-
+    new_comment = models.BooleanField(null=True)
 
 class Comment(models.Model):
     class Meta:
