@@ -15,7 +15,6 @@ from makesolution import make_wise_image
 class ArticlePagination(PageNumberPagination):
     page_size = 3
 
-    
 class CommentPagination(PageNumberPagination): 
     page_size = 5
 
