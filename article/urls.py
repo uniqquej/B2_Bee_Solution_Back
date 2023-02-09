@@ -10,7 +10,7 @@ urlpatterns = [
     path('<int:article_id>/detail/', views.ArticleDetailView.as_view()),
     path('<int:article_id>/solution/', views.MakeSolutionView.as_view(), name='make_solution'),
     path('<int:article_id>/comment/', views.CommentView.as_view(), name = 'comment_view'),
-    path('<int:article_id>/comment/<int:comment_id>/', views.CommentDetailView.as_view()),
+    path('<int:article_id>/comment/<int:comment_id>/', views.CommentDetailView.as_view(), name = 'comment_detail'),
     path('<int:article_id>/comment/<int:comment_id>/likes/', views.CommentLikeView.as_view()),
     path('allsolution/', views.AllBeeSolutionView.as_view(), name='all_solution'),
     path('mysolution/', views.MyBeeSolutionView.as_view(), name='my_solution'),

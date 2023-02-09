@@ -85,8 +85,9 @@ class CommentDetailView(APIView):
             if comment_serializer.is_valid():
                 comment_serializer.save()
                 return Response(comment_serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response({"message":"권한이 없습니다."}, status=status.HTTP_403_FORBIDDEN)
+            return Response(comment_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"message":"권한이 없습니다."}, status=status.HTTP_403_FORBIDDEN)
     
     def delete(self, request, article_id, comment_id):
         comment = Comment.objects.get(id=comment_id)
