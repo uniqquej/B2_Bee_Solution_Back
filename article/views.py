@@ -18,7 +18,6 @@ class ArticlePagination(PageNumberPagination):
 class CommentPagination(PageNumberPagination): 
     page_size = 5
 
-    
 class MakeWorryView(APIView):
     def post(self, request):
         my_id = request.user.id
@@ -169,7 +168,7 @@ class ArticleDetailView(APIView):
                 article_serializer.save()
                 return Response(article_serializer.data, status=status.HTTP_200_OK)
             else:
-                return Response(article_serializer.errors, status=status.__name__)
+                return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({"message":"권한이 없습니다."}, status=status.HTTP_403_FORBIDDEN)
     
@@ -197,11 +196,11 @@ class MainView(APIView, PaginationHandlerMixin):
             mbti = mbti_list[category_id - 9]
         
         if category_id == 0:
-            articles = Article.objects.all()
+            articles = Article.objects.all().prefetch_related('solution','comment_set')
         elif category_id < 5:
-            articles = Article.objects.filter(category=category)
+            articles = Article.objects.filter(category=category).prefetch_related('solution','comment_set')
         else:
-            articles = Article.objects.filter(mbti=mbti)
+            articles = Article.objects.filter(mbti=mbti).prefetch_related('solution','comment_set')
         
         page = self.paginate_queryset(articles)
 
