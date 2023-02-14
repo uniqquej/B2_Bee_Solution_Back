@@ -156,3 +156,38 @@ class CommentDetailTest(APITestCase):
 
         self.assertEqual(response.status_code, 403)
     
+    
+class CommentLikeTest(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.faker = Faker()
+        cls.article_user = User.objects.create_user('test1','xptmxm123!')
+        cls.current_user = User.objects.create_user('test2','xptmxm123!')
+        cls.current_user_data = {"username":"test2", "password":"xptmxm123!"}
+        cls.article = Article.objects.create(
+            user_id = cls.article_user.pk,
+            content = "article example",
+            mbti = "ENFP",
+            category = "일상"
+        )
+        
+        for _ in range(3):
+            Comment.objects.create(
+                content = cls.faker.sentence(),
+                article_id = cls.article.id,
+                user_id = cls.current_user.id
+                )
+    
+    def setUp(self):
+        self.access_token = self.client.post(reverse('user_auth_view'), self.current_user_data).data['access']
+    
+    def test_like_comment(self):
+        url = reverse('comment_like', kwargs={'article_id': 1, 'comment_id':1})
+        response = self.client.post(
+            path=url,
+            HTTP_AUTHORIZATION = f'Bearer {self.access_token}'
+        )
+        
+        self.assertEqual(response.data['message'],'좋아요')
+        self.assertEqual(response.status_code,200)
+        

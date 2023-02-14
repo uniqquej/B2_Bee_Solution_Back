@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from users.models import User, UserChr
-from article.models import Rating, Category, Solution
+from article.models import Rating, Category, Solution, Article
 from faker import Faker
 import random
 
@@ -126,3 +126,86 @@ class LoadArticleTest(APITestCase):
         )
         # print('make_worry_get : ', response.data)
         self.assertEqual(response.status_code,200)
+
+class DetailArticleTest(APITestCase):
+    '''
+    고민 수정, 삭제 테스트
+    '''
+    @classmethod
+    def setUpTestData(cls):
+        cls.faker = Faker()
+        cls.user_data = {'username':'test1','password':'xptmxm123!'}
+        cls.user = User.objects.create_user(
+            username = 'test1',
+            password = 'xptmxm123!'
+        )
+        for _ in range(5):
+            cls.article = Article.objects.create(
+                user_id = 1,
+                content =  cls.faker.sentence(),
+                mbti = 'ISFJ',
+                category = '일상'
+            )
+        
+        cls.current_article = Article.objects.get(id=1)
+    
+    def setUp(self):
+         self.access_token = self.client.post(reverse('user_auth_view'), self.user_data).data['access']
+    
+    def test_edit_article(self):
+        url = reverse('detail_article', args=[self.current_article.pk])
+        response = self.client.put(
+            path = url,
+            data = {
+                "content" : "edit!!",
+                "category": "취업"
+                },
+            HTTP_AUTHORIZATION = f'Bearer {self.access_token}'
+        )
+        print(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['content'], "edit!!")
+    
+    def test_delete_article(self):
+        url = reverse('detail_article', args=[self.current_article.pk])
+        response = self.client.delete(
+            path = url,
+            HTTP_AUTHORIZATION = f'Bearer {self.access_token}'
+        )
+        print(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Article.objects.count(), 4)
+        
+
+class MainViewTest(APITestCase):
+    '''
+    article 카테고리 별 조회
+    '''
+    @classmethod
+    def setUpTestData(cls):
+        cls.faker = Faker()
+        cls.user_data = {'username' : 'test1', 'password' : 'xptmxm123!'}
+        cls.user = User.objects.create_user('test1','xptmxm123!')
+        
+        cls.category_list = ['일상', '취미', '취업', '음식']
+        for category in cls.category_list:
+            cls.article = Article.objects.create(
+                user_id = 1,
+                content = cls.faker.sentence(),
+                mbti = 'ISFJ',
+                category = category
+            )
+    
+    def setUp(self):
+        self.access_token = self.client.post(reverse('user_auth_view'), self.user_data).data['access']
+        
+    def test_load_main(self):
+        self.category_id = 1
+        url = reverse('main', args=[self.category_id])
+        response = self.client.get(
+            path = url,
+            HTTP_AUTHORIZATION = f'Bearer {self.access_token}'
+        )
+        # print(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['results'][0]['category'], self.category_list[self.category_id-1])
