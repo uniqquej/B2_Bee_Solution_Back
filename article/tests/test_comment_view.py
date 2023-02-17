@@ -190,4 +190,53 @@ class CommentLikeTest(APITestCase):
         
         self.assertEqual(response.data['message'],'좋아요')
         self.assertEqual(response.status_code,200)
+
+class NewCommentAlarmTest(APITestCase):
+    """
+    게시글에 새로운 댓글 알림 기능 테스트
+    """
+    @classmethod
+    def setUpTestData(cls):
+        cls.faker = Faker()
+        cls.user_data = {"username" :"article_user","password":"xptmxm123!"}
+        cls.user = User.objects.create_user("article_user","xptmxm123!")
+        cls.article = Article.objects.create(
+            user_id = 1,
+            content = cls.faker.sentence(),
+            mbti = 'ENFP',
+            category = '취업',
+            new_comment = True
+        )
+        cls.comment = Comment.objects.create(
+            article_id = 1,
+            user_id = 1,
+            content = cls.faker.sentence()
+        )
+    def setUp(self):
+        self.access_token = self.client.post(reverse('user_auth_view'), self.user_data).data['access']
+    
+    def test_alarm_page(self):
+        
+        # 알람페이지에서 목록 확인
+        url = reverse('alarm', args=[0])
+        response = self.client.get(
+            path = url,
+            HTTP_AUTHORIZATION = f'Bearer {self.access_token}'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data[0]['content'],Article.objects.get(id=1).content)
+    
+    def test_comment_alarm(self):
+        
+        # 다른 페이지에서 알림 이미지 상태
+        url = reverse('alarm', args=[1])
+        response = self.client.get(
+            path = url,
+            HTTP_AUTHORIZATION = f'Bearer {self.access_token}'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        
+        
         
