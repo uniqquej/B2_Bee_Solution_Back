@@ -1,13 +1,12 @@
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination 
 from article.models import Solution, Article, Rating, Comment
 from article.serializers import EditWorrySerializer, WorrySerializer, BeeSolutionSerializer, RatingSerializer, CommentSerializer, MakeSolutionSerializer, SolutionDetailSerializer, MyRatingSolutionSerializer, CommentcreateSerializer
 from article.pagination import PaginationHandlerMixin
-from users.models import User, UserChr
+from users.models import UserChr
 from similarity import make_solution
 from makesolution import make_wise_image
 
@@ -19,6 +18,8 @@ class CommentPagination(PageNumberPagination):
     page_size = 5
 
 class MakeWorryView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request):
         my_id = request.user.id
         category_list = ['일상', '취미', '취업', '음식']
@@ -34,17 +35,10 @@ class MakeWorryView(APIView):
             return Response(worry_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        solution = Article.objects.filter(user_id=request.user.id).first()
-        solution_serializer = WorrySerializer(solution)
+        article = Article.objects.filter(user_id=request.user.id).prefetch_related('solution').first()
+        solution= article.solution.first()
+        solution_serializer = BeeSolutionSerializer(solution)
         return Response(solution_serializer.data, status=status.HTTP_200_OK)
-
-
-class BeeSolutionView(APIView):  
-    def get(self,request, solution_id):
-        bee_solution = Solution.objects.get(id=solution_id)
-        bee_solution_serializer = BeeSolutionSerializer(bee_solution)
-        return Response(bee_solution_serializer.data, status=status.HTTP_200_OK)
-
 
 class CommentView(APIView,PaginationHandlerMixin):
     pagination_class = CommentPagination
